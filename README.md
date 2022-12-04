@@ -1,2 +1,2 @@
 # Practica3-URV
-Pràctica 3 
+Pràctica 3 - Programació
