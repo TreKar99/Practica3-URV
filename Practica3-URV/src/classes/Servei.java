@@ -8,4 +8,9 @@ public class Servei extends Producte{
         super(codi, descripcio, tipus, dataOferta);
         this.fiOferiment = fiOferiment;
     }
+
+    public Producte copia() {
+        return (new Servei(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), fiOferiment));
+    }
+
 }

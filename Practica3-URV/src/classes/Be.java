@@ -14,4 +14,8 @@ public class Be extends Producte{
         this.fons = fons;
         this.pes = pes;
     }
+
+    public Producte copia() {
+        return(new Be(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), amplada, alcada, fons, pes));
+    }
 }
