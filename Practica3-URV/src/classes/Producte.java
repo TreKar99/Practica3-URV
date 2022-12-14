@@ -43,6 +43,7 @@ public abstract class Producte {
         this.dataOferta = dataOferta;
     }
 
+    public abstract Producte copia();
 
-    abstract Producte copia();
+    public abstract String toString();
 }

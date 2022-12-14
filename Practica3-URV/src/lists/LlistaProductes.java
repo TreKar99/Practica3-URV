@@ -8,7 +8,6 @@ public class LlistaProductes {
     private Producte[] llista;
     private int numProductes;
 
-
     public LlistaProductes(int mida) {
         llista = new Producte[mida];
         this.numProductes = 0;
@@ -16,13 +15,19 @@ public class LlistaProductes {
 
     public void afegirProducte(Producte p) {
 
-        if (p instanceof Servei) {
-            llista[numProductes] = ¿?
-            numProductes++;
-        } else if (p instanceof Be) {
-            llista[numProductes] = ¿?
-            numProductes++;
+        llista[numProductes] = p.copia();
+        numProductes++;
+
+    }
+
+    public String toString() {
+        String text = "";
+
+        for (int i = 0; i < numProductes; i++) {
+            text += llista[i].toString() + "\n";
         }
+
+        return (text);
 
     }
 }

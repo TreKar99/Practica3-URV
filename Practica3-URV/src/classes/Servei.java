@@ -9,8 +9,13 @@ public class Servei extends Producte{
         this.fiOferiment = fiOferiment;
     }
 
-    public Producte copia() {
+    public Servei copia() {
         return (new Servei(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), fiOferiment));
+    }
+
+
+    public String toString() {
+        return("Es un servei " + fiOferiment);
     }
 
 }

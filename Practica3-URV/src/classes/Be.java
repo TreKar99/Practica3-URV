@@ -15,7 +15,15 @@ public class Be extends Producte{
         this.pes = pes;
     }
 
-    public Producte copia() {
-        return(new Be(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), amplada, alcada, fons, pes));
+    public Be copia() {
+
+        Be b = new Be(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), amplada, alcada, fons, pes);
+        b.dataIntercanvi = this.dataIntercanvi;
+
+        return (b);
+    }
+
+    public String toString() {
+        return("Es un be " + amplada + " " + alcada + " " + fons + " " + pes);
     }
 }
