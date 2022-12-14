@@ -1,3 +1,5 @@
+// TOWI BRANCH COMMIT
+
 package aplication;
 
 import java.io.*;
@@ -11,55 +13,239 @@ import lists.LlistaUsuaris;
 public class UsaClasesTest {
 
 	static final int MAX = 5000;
-    public static void main(String[] args) throws IOException{
+	static Scanner teclat = new Scanner(System.in);
 
-			//Scanner fitxerUsuaris = new Scanner(new File("elcolega.txt"));
-			//ObjectOutputStream fitxerSortida = new ObjectOutputStream(new FileOutputStream("Densitat.bin"));
-			Scanner fitxerProductes = new Scanner(new File("productesTest.txt"));
-			Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
-			
+	public static void main(String[] args) throws IOException {
 
-			LlistaProductes llistaProductes = readProductes(fitxerProductes);
-			System.out.println(llistaProductes.toString());
-			fitxerProductes.close();
+		int opcio;
+		// Lectura dels fitxers de productes i intercanvis
+		Scanner fitxerProductes = new Scanner(new File("productesTest.txt"));
+		Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
 
-			LlistaPeticionsIntercanvi llistaPeticions = readIntercanvis(fitxerPeticioIntercanvi);
-			System.out.println(llistaPeticions.toString());
-			fitxerPeticioIntercanvi.close();
+		LlistaProductes llistaProductes = readProductes(fitxerProductes);
+		System.out.println(llistaProductes.toString());
+		fitxerProductes.close();
 
-			//LlistaUsuaris llistaUsers = new LlistaUsuaris(2);
-			//String usuari;
-
-			/*while(fitxerUsuaris.hasNextLine()){
-				usuari = fitxerUsuaris.nextLine();
-				readUsuaris(usuari, llistaUsers);
-				System.out.println(usuari);
-			}
-
-
-			fitxerUsuaris.close();*/
-	
-	}
-	public static void readUsuaris(String usuari, LlistaUsuaris llistaUsers) {
-		Scanner atributtes = new Scanner(usuari);
-		atributtes.useDelimiter(";");
-
-		String alies, email;
-		int codiPostal;
-
-		alies = atributtes.next();
-		email = atributtes.next();
-		codiPostal = Integer.parseInt(atributtes.next());
-
-		Usuari currUser = new Usuari(alies, email, codiPostal);
-		llistaUsers.AfegirUsuari(currUser);
+        
+		LlistaPeticionsIntercanvi llistaPeticions = readIntercanvis(fitxerPeticioIntercanvi);
+		System.out.println(llistaPeticions.toString());
+		fitxerPeticioIntercanvi.close();
 
 		
-		atributtes.close();
+		// Menú de consola
+		mostraMenu();
+		opcio = Integer.parseInt(teclat.nextLine());
+		while ((opcio < 17) && (opcio > 0)) {
+			switch (opcio) {
+				case 1:
+					opcio1();
+					break;
+				case 2:
+					opcio2();
+					break;
+				case 3:
+					opcio3();
+					break;
+				case 4:
+					opcio4();
+					break;
+				case 5:
+					opcio5();
+					break;
+				case 6:
+					opcio6();
+					break;
+				case 7:
+					opcio7();
+					break;
+				case 8:
+					opcio8();
+					break;
+				case 9:
+					opcio9();
+					break;
+				case 10:
+					opcio10();
+					break;
+				case 11:
+					opcio11();
+					break;
+				case 12:
+					opcio12();
+					break;
+				case 13:
+					opcio13();
+					break;
+				case 14:
+					opcio14();
+					break;
+				case 15:
+					opcio15();
+					break;
+				case 16:
+					opcio16();
+					break;
+			}
+
+			mostraMenu();
+			opcio = Integer.parseInt(teclat.nextLine());
+			
+		}
+
 	}
 
 	/**
-	 * Métode que llegieix el fitxer que conté els productes i retorna una llista amb els mateixos
+	 * Métode que mostra el menú d'opcions per consola
+	 */
+	public static void mostraMenu() {
+		System.out.println("\n\nOpcions del menu:");
+		System.out.println("\n\t1. Carregar fitxers");
+		System.out.println("\t2. Llistar dades de llistes");
+		System.out.println("\t3. Llistar ofertes de serveis actives");
+		System.out.println("\t4. Llistar bens o productes fisics disponibles");
+		System.out.println("\t5. Afegir nova oferta de serveis");
+		System.out.println("\t6. Afegir nou be o producte fisic a intercanviar");
+		System.out.println("\t7. Nova peticio d'intercanvi");
+		System.out.println("\t8. Aceptar o refusar peticions");
+		System.out.println("\t9. Donar d'alta nou usuari");
+		System.out.println("\t10. Donar de baix un be o producte físic");
+		System.out.println("\t11. Desactivar un servei");
+		System.out.println("\t12. Peticions pendents");
+		System.out.println("\t13. Peticions acceptades");
+		System.out.println("\t14. Peticions refusades");
+		System.out.println("\t15. Usuaris amb valoracio superior a 'x'");
+		System.out.println("\t16. Servei mes intercanviat");
+		System.out.println("\t17. Sortir");
+		System.out.print("\n\t\t\tIndica opcio:\n");
+	}
+
+	public static void opcio1() {
+
+	}
+
+	/**
+	 * Métode que printeja per pantalla la llista indicada
+	 */
+	public static void opcio2() {
+
+	}
+
+	/**
+	 * Métode que printeja per pantalla les ofertes de serveis actives
+	 */
+	public static void opcio3() {
+
+	}
+
+	/**
+	 * Métode que printeja per pantalla els productes actius
+	 */
+	public static void opcio4() {
+
+	}
+
+	/**
+	 * Métode que afegeix una nova oferta de serveis
+	 */
+	public static void opcio5() {
+
+	}
+
+	/**
+	 * Métode  que afegeix un nou producte a intercanviar
+	 */
+	public static void opcio6() {
+
+	}
+
+	/**
+	 * Métode que afegeix una petició d'intercanvi
+	 */
+	public static void opcio7() {
+
+	}
+
+	/**
+	 * Métode que accepta o refusa una petició d'intercanvi
+	 */
+	public static void opcio8() {
+
+	}
+
+
+	/**
+	 * Métode que dona d'alta un usuari
+	 */
+	public static void opcio9() {
+
+	}
+
+
+	/**
+	 * Métode que dona de baixa un bé o producte fisic i
+	 * l'elimina de la llista
+	 */
+	public static void opcio10() {
+
+	}
+
+	/**
+	 * Métode que desactiva un servei sense esborrarlo de la llista
+	 */
+	public static void opcio11() {
+
+	}
+
+	/**
+	 * Métode que mostra les peticions d'intercanvi a respondre
+	 */
+	public static void opcio12() {
+
+	}
+
+	/**
+	 * Métode que mostra les peticions d'intercanvi accpetades
+	 */
+	public static void opcio13() {
+
+	}
+
+	/**
+	 * Métode que mostra les peticions d'intercanvi refusades
+	 */
+	public static void opcio14() {
+
+	}
+
+	/**
+	 * Métode que mostra els usuaris que tenen valoracions
+	 * superiors a les indicades
+	 */
+	public static void opcio15() {
+
+	}
+
+	/**
+	 * Métode que mostra el servei amb mes intercanvis i el núm
+	 * de ells
+	 */
+	public static void opcio16() {
+
+	}
+
+	/**
+	 * Métode que surt de l'aplicació i pregunta a l'usuari si vol
+	 * escriure les noves dades introduides o deixar el fitxer com
+	 * estava
+	 */
+	public static void opcio17() {
+
+	}
+
+	/**
+	 * Métode que llegieix el fitxer que conté els productes i retorna una llista
+	 * amb els mateixos
+	 * 
 	 * @param fitxerProductes
 	 * @return LlistaProductes
 	 */
@@ -67,7 +253,7 @@ public class UsaClasesTest {
 
 		LlistaProductes aux = new LlistaProductes(MAX);
 
-		while(fitxerProductes.hasNextLine()) {
+		while (fitxerProductes.hasNextLine()) {
 
 			aux.afegirProducte(parseProductes(fitxerProductes.nextLine()));
 		}
@@ -78,6 +264,7 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que transforma una linea en un Producte : be o servei
+	 * 
 	 * @param lineaProducte
 	 * @return Producte
 	 */
@@ -85,7 +272,7 @@ public class UsaClasesTest {
 
 		Producte p;
 		String codi, descripcio, tipus, dataOferta, fiOferiment;
-		float amplada, alcada, fons ,pes;
+		float amplada, alcada, fons, pes;
 
 		Scanner atributtes = new Scanner(lineaProducte);
 		atributtes.useDelimiter(";");
@@ -95,7 +282,7 @@ public class UsaClasesTest {
 		tipus = atributtes.next();
 		dataOferta = atributtes.next();
 
-		if (tipus.toLowerCase() == "be") {
+		if (tipus.toLowerCase().equals("be")) {
 
 			amplada = Float.parseFloat(atributtes.next());
 			alcada = Float.parseFloat(atributtes.next());
@@ -105,12 +292,13 @@ public class UsaClasesTest {
 			Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes);
 			p = aux.copia();
 
-		} else if (tipus.toLowerCase() == "servei") {
+		} else if (tipus.toLowerCase().equals("servei")) {
 
 			fiOferiment = atributtes.next();
 
 			Servei aux = new Servei(codi, descripcio, tipus, dataOferta, fiOferiment);
 			p = aux.copia();
+
 		} else {
 			p = null;
 		}
@@ -120,7 +308,9 @@ public class UsaClasesTest {
 	}
 
 	/**
-	 * Métode que llegieix el fitxer que conté els intercanvis i retorna una llista amb els mateixos
+	 * Métode que llegieix el fitxer que conté els intercanvis i retorna una llista
+	 * amb els mateixos
+	 * 
 	 * @param fitxerPeticioIntercanvi
 	 * @return LlistaPeticionsIntercanvi
 	 */
@@ -128,7 +318,7 @@ public class UsaClasesTest {
 
 		LlistaPeticionsIntercanvi aux = new LlistaPeticionsIntercanvi(MAX);
 
-		while(fitxerPeticioIntercanvi.hasNextLine()) {
+		while (fitxerPeticioIntercanvi.hasNextLine()) {
 			aux.AfegirPeticio(parseIntercanvis(fitxerPeticioIntercanvi.nextLine()));
 		}
 		return (aux);
@@ -136,6 +326,7 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que transforma una linea del fitxer en una petició d'intercanvi
+	 * 
 	 * @param lineaIntercanvi
 	 * @return PeticioIntercanvi
 	 */
@@ -153,12 +344,10 @@ public class UsaClasesTest {
 		aux.setProducteRebre(atributtes.next());
 		aux.setAfirmativa(Boolean.parseBoolean(atributtes.next()));
 		aux.setValoracioEmisor(Integer.parseInt(atributtes.next()));
-		aux.setValoracioRemitent(Integer.parseInt(atributtes.next())); 
+		aux.setValoracioRemitent(Integer.parseInt(atributtes.next()));
 
 		atributtes.close();
 
 		return (aux);
 	}
 }
-
-
