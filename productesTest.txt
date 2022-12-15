@@ -1,5 +1,5 @@
 codi;descripcio;be;dataoferta;100;100;100;100
-codi;descripcio;servei;dataoferta;datafi
+codi;descripcio;servei;dataoferta;16/12/2022
 Leche;leche fresca;be;10/10/2022;12;15;10;1
 Platano;platano de canarias;be;12/12/1212;50;10;10;1
-Viaje;Viaje a Oslo;servei;01/01/2000;01/01/2022
+Viaje;Viaje a Oslo;servei;01/01/2000;01/01/2023
