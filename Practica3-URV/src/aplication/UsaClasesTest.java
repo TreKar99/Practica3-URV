@@ -23,31 +23,25 @@ public class UsaClasesTest {
 		Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
 
 		LlistaProductes llistaProductes = readProductes(fitxerProductes);
-		System.out.println(llistaProductes.toString());
-		fitxerProductes.close();
+		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
+		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(5);
 
-        
-		LlistaPeticionsIntercanvi llistaPeticions = readIntercanvis(fitxerPeticioIntercanvi);
-		System.out.println(llistaPeticions.toString());
-		fitxerPeticioIntercanvi.close();
-
-		
 		// Menú de consola
 		mostraMenu();
 		opcio = Integer.parseInt(teclat.nextLine());
 		while ((opcio < 17) && (opcio > 0)) {
 			switch (opcio) {
 				case 1:
-					opcio1();
+					opcio1(fitxerProductes, fitxerPeticioIntercanvi,llistaProductes, llistaIntercanvis);
 					break;
 				case 2:
-					opcio2();
+					opcio2(llistaIntercanvis, llistaProductes, llistaUsuaris);
 					break;
 				case 3:
-					opcio3();
+					opcio3(llistaProductes);
 					break;
 				case 4:
-					opcio4();
+					opcio4(llistaProductes);
 					break;
 				case 5:
 					opcio5();
@@ -85,11 +79,14 @@ public class UsaClasesTest {
 				case 16:
 					opcio16();
 					break;
+				case 17:
+					opcio17(opcio);
+					break;
 			}
 
 			mostraMenu();
 			opcio = Integer.parseInt(teclat.nextLine());
-			
+
 		}
 
 	}
@@ -119,29 +116,58 @@ public class UsaClasesTest {
 		System.out.print("\n\t\t\tIndica opcio:\n");
 	}
 
-	public static void opcio1() {
+	/**
+	 * Métode que carrega fitxers
+	 */
+	public static void opcio1(Scanner fitxerProductes, Scanner fitxerIntercanvis, LlistaProductes productes, LlistaPeticionsIntercanvi intercanvis) {
 
+		//productes = readProductes(fitxerProductes);
+		//intercanvis = readIntercanvis(fitxerIntercanvis);
 	}
 
 	/**
 	 * Métode que printeja per pantalla la llista indicada
+	 * @param LlistaPeticionsIntercanvi
+	 * @param LlistaProductes
+	 * @param LlistaUsuaris
 	 */
-	public static void opcio2() {
+	public static void opcio2(LlistaPeticionsIntercanvi i, LlistaProductes p, LlistaUsuaris u) {
+		String llistaAMostrar;
+		System.out.println("Introdueix la llista que vols mostrar (serveis, bens, peticions, usuaris): \n");
+		llistaAMostrar = teclat.nextLine();
+		if (llistaAMostrar.toLowerCase().equals("bens")) {
 
+			System.out.println(p.toStringBens());
+
+		} else if (llistaAMostrar.toLowerCase().equals("serveis")) {
+
+			System.out.println(p.toStringServeis());
+
+		} else if (llistaAMostrar.toLowerCase().equals("peticions")) {
+
+			System.out.println(i.toString());
+
+		} else if (llistaAMostrar.toLowerCase().equals("usuaris")) {
+
+			System.out.println(u.toString());
+
+		}
 	}
 
 	/**
 	 * Métode que printeja per pantalla les ofertes de serveis actives
+	 * @param LlistaProductes
 	 */
-	public static void opcio3() {
-
+	public static void opcio3(LlistaProductes serveis) {
+		System.out.println(serveis.serveisActius());
 	}
 
 	/**
 	 * Métode que printeja per pantalla els productes actius
+	 * @param LlistaProductes
 	 */
-	public static void opcio4() {
-
+	public static void opcio4(LlistaProductes bens) {
+		System.out.println(bens.bensActius());
 	}
 
 	/**
@@ -152,7 +178,7 @@ public class UsaClasesTest {
 	}
 
 	/**
-	 * Métode  que afegeix un nou producte a intercanviar
+	 * Métode que afegeix un nou producte a intercanviar
 	 */
 	public static void opcio6() {
 
@@ -172,14 +198,12 @@ public class UsaClasesTest {
 
 	}
 
-
 	/**
 	 * Métode que dona d'alta un usuari
 	 */
 	public static void opcio9() {
 
 	}
-
 
 	/**
 	 * Métode que dona de baixa un bé o producte fisic i
@@ -238,8 +262,9 @@ public class UsaClasesTest {
 	 * escriure les noves dades introduides o deixar el fitxer com
 	 * estava
 	 */
-	public static void opcio17() {
+	public static int opcio17(int opcio) {
 
+		return (opcio++);
 	}
 
 	/**
@@ -284,6 +309,7 @@ public class UsaClasesTest {
 
 		if (tipus.toLowerCase().equals("be")) {
 
+			// TODO controlar dataIntercanvi
 			amplada = Float.parseFloat(atributtes.next());
 			alcada = Float.parseFloat(atributtes.next());
 			fons = Float.parseFloat(atributtes.next());

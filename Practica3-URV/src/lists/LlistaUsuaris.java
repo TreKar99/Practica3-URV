@@ -16,4 +16,15 @@ public class LlistaUsuaris {
         llista[numUsuaris] = new Usuari(currUsuari);
         numUsuaris++;
     }
+
+    public String toString() {
+        String text = "";
+
+        for(int i = 0; i < numUsuaris; i++) {
+            text += llista[i].toString() + "\n";
+        }
+
+        return (text);
+
+    }
 }
