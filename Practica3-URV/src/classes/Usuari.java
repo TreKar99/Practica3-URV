@@ -24,5 +24,9 @@ public class Usuari implements Serializable{
         this.email = email;
         this.codiPostal = codiPostal;
     }
+
+    public String toString() {
+        return ("Usuari " + alies + " amb correu " + email + " i codi postal " + codiPostal);
+    }
    
 }
