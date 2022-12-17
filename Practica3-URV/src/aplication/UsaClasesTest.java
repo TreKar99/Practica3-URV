@@ -53,7 +53,7 @@ public class UsaClasesTest {
 					opcio7();
 					break;
 				case 8:
-					opcio8();
+					opcio8(llistaIntercanvis);
 					break;
 				case 9:
 					opcio9();
@@ -194,8 +194,25 @@ public class UsaClasesTest {
 	/**
 	 * Métode que accepta o refusa una petició d'intercanvi
 	 */
-	public static void opcio8() {
+	public static void opcio8(LlistaPeticionsIntercanvi intercanvis) {
+		String codiIntercanvi;
+		
+		System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
+		codiIntercanvi = teclat.nextLine();
+		while (intercanvis.existeix(codiIntercanvi) == -1) {
+			System.out.println("Aquesta petició no existeix");
+			System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
+			codiIntercanvi = teclat.nextLine();
+		}
 
+		System.out.println("Vols acceptar o refusar aquesta peticio? (Y/n)");
+		if (teclat.nextLine().toLowerCase().equals("y")) {
+			intercanvis.accepta(codiIntercanvi);
+		} else if (teclat.nextLine().toLowerCase().equals("n")) {
+			intercanvis.refusa(codiIntercanvi);
+		}
+
+		System.out.println("Acció realitzada!");
 	}
 
 	/**
@@ -363,6 +380,7 @@ public class UsaClasesTest {
 		Scanner atributtes = new Scanner(lineaIntercanvi);
 		atributtes.useDelimiter(";");
 
+		//TODO Controlar contestada
 		aux = new PeticioIntercanvi(atributtes.next());
 		aux.setUsuariEmisor(atributtes.next());
 		aux.setUsuariRemitent(atributtes.next());
