@@ -3,7 +3,7 @@ package classes;
 public class PeticioIntercanvi {
     
     private String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
-    private boolean afirmativa;
+    private boolean afirmativa, constestada;
     private int valoracioEmisor, valoracioRemitent;
 
 
@@ -16,6 +16,25 @@ public class PeticioIntercanvi {
     */
     public PeticioIntercanvi(String codi) {
         this.codi = codi;
+    }
+
+    /**
+     * Constructor Petició intercanvi
+     * @param codi
+     * @param emisor
+     * @param remitent
+     * @param pRebre
+     * @param pOferit
+     */
+    public PeticioIntercanvi(String codi, String emisor, String remitent, String pRebre, String pOferit)
+    {
+        this.codi = codi;
+        this.usuariEmisor = emisor; 
+        this.usuariRemitent = remitent; 
+        this.producteRebre = pRebre;
+        this.producteOferit = pOferit;
+        this.afirmativa = false;
+        this.constestada = false;
     }
 
 
@@ -75,6 +94,18 @@ public class PeticioIntercanvi {
         return this.valoracioEmisor;
     }
 
+    public boolean isConstestada() {
+        return this.constestada;
+    }
+
+    public boolean getConstestada() {
+        return this.constestada;
+    }
+
+    public void setConstestada(boolean constestada) {
+        this.constestada = constestada;
+    }
+
     public void setValoracioEmisor(int valoracioEmisor) {
         this.valoracioEmisor = valoracioEmisor;
     }
@@ -86,7 +117,6 @@ public class PeticioIntercanvi {
     public void setValoracioRemitent(int valoracioRemitent) {
         this.valoracioRemitent = valoracioRemitent;
     }
-
 
     /**
      * Métode per fer una copia de una PeticioIntercanvi
