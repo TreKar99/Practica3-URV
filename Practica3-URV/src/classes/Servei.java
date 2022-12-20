@@ -1,11 +1,5 @@
 package classes;
 
-import java.time.Month;
-import java.util.Currency;
-
-import javax.xml.crypto.Data;
-
-import java.sql.Date;
 import java.time.*;
 
 public class Servei extends Producte {

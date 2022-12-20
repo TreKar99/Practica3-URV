@@ -133,11 +133,12 @@ public class PeticioIntercanvi {
         aux.afirmativa = this.afirmativa;
         aux.valoracioEmisor = this.valoracioEmisor;
         aux.valoracioRemitent = this.valoracioRemitent;
+        aux.constestada = this.constestada;
 
         return (aux);
     }
 
     public String toString() {
-        return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent).");
+        return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + constestada);
     }
 }

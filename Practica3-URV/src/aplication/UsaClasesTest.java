@@ -19,8 +19,10 @@ public class UsaClasesTest {
 
 		int opcio;
 		// Lectura dels fitxers de productes i intercanvis
-		Scanner fitxerProductes = new Scanner(new File("productesTest.txt"));
-		Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
+		BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
+		BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
+		
+		//BufferedWriter test = new BufferedWriter(new FileWriter("intercanvisTest.txt"));
 
 		LlistaProductes llistaProductes = readProductes(fitxerProductes);
 		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
@@ -32,7 +34,7 @@ public class UsaClasesTest {
 		while ((opcio < 17) && (opcio > 0)) {
 			switch (opcio) {
 				case 1:
-					opcio1(fitxerProductes, fitxerPeticioIntercanvi,llistaProductes, llistaIntercanvis);
+					//opcio1(fitxerProductes, fitxerPeticioIntercanvi, llistaProductes, llistaIntercanvis);
 					break;
 				case 2:
 					opcio2(llistaIntercanvis, llistaProductes, llistaUsuaris);
@@ -65,13 +67,13 @@ public class UsaClasesTest {
 					opcio11();
 					break;
 				case 12:
-					opcio12();
+					opcio12(llistaIntercanvis);
 					break;
 				case 13:
-					opcio13();
+					opcio13(llistaIntercanvis);
 					break;
 				case 14:
-					opcio14();
+					opcio14(llistaIntercanvis);
 					break;
 				case 15:
 					opcio15();
@@ -88,6 +90,12 @@ public class UsaClasesTest {
 			opcio = Integer.parseInt(teclat.nextLine());
 
 		}
+
+		/*
+		test.write("hola");
+		test.newLine();
+		test.close();
+		*/
 
 	}
 
@@ -119,14 +127,16 @@ public class UsaClasesTest {
 	/**
 	 * Métode que carrega fitxers
 	 */
-	public static void opcio1(Scanner fitxerProductes, Scanner fitxerIntercanvis, LlistaProductes productes, LlistaPeticionsIntercanvi intercanvis) {
+	public static void opcio1(Scanner fitxerProductes, Scanner fitxerIntercanvis, LlistaProductes productes,
+			LlistaPeticionsIntercanvi intercanvis) {
 
-		//productes = readProductes(fitxerProductes);
-		//intercanvis = readIntercanvis(fitxerIntercanvis);
+		// productes = readProductes(fitxerProductes);
+		// intercanvis = readIntercanvis(fitxerIntercanvis);
 	}
 
 	/**
 	 * Métode que printeja per pantalla la llista indicada
+	 * 
 	 * @param LlistaPeticionsIntercanvi
 	 * @param LlistaProductes
 	 * @param LlistaUsuaris
@@ -156,6 +166,7 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que printeja per pantalla les ofertes de serveis actives
+	 * 
 	 * @param LlistaProductes
 	 */
 	public static void opcio3(LlistaProductes serveis) {
@@ -164,6 +175,7 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que printeja per pantalla els productes actius
+	 * 
 	 * @param LlistaProductes
 	 */
 	public static void opcio4(LlistaProductes bens) {
@@ -196,7 +208,7 @@ public class UsaClasesTest {
 	 */
 	public static void opcio8(LlistaPeticionsIntercanvi intercanvis) {
 		String codiIntercanvi;
-		
+
 		System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
 		codiIntercanvi = teclat.nextLine();
 		while (intercanvis.existeix(codiIntercanvi) == -1) {
@@ -240,22 +252,22 @@ public class UsaClasesTest {
 	/**
 	 * Métode que mostra les peticions d'intercanvi a respondre
 	 */
-	public static void opcio12() {
-
+	public static void opcio12(LlistaPeticionsIntercanvi intercanvis) {
+		System.out.println(intercanvis.toStringPerRespondre());
 	}
 
 	/**
 	 * Métode que mostra les peticions d'intercanvi accpetades
 	 */
-	public static void opcio13() {
-
+	public static void opcio13(LlistaPeticionsIntercanvi intercanvis) {
+		System.out.println(intercanvis.toStringAcceptades());
 	}
 
 	/**
 	 * Métode que mostra les peticions d'intercanvi refusades
 	 */
-	public static void opcio14() {
-
+	public static void opcio14(LlistaPeticionsIntercanvi intercanvis) {
+		System.out.println(intercanvis.toStringRefusades());
 	}
 
 	/**
@@ -290,14 +302,18 @@ public class UsaClasesTest {
 	 * 
 	 * @param fitxerProductes
 	 * @return LlistaProductes
+	 * @throws IOException
 	 */
-	public static LlistaProductes readProductes(Scanner fitxerProductes) {
+	public static LlistaProductes readProductes(BufferedReader fitxerProductes) throws IOException {
 
 		LlistaProductes aux = new LlistaProductes(MAX);
+		String frase;
 
-		while (fitxerProductes.hasNextLine()) {
+		frase = fitxerProductes.readLine();
+		while (frase != null) {
 
-			aux.afegirProducte(parseProductes(fitxerProductes.nextLine()));
+			aux.afegirProducte(parseProductes(frase));
+			frase = fitxerProductes.readLine();
 		}
 
 		return (aux);
@@ -356,13 +372,17 @@ public class UsaClasesTest {
 	 * 
 	 * @param fitxerPeticioIntercanvi
 	 * @return LlistaPeticionsIntercanvi
+	 * @throws IOException
 	 */
-	public static LlistaPeticionsIntercanvi readIntercanvis(Scanner fitxerPeticioIntercanvi) {
+	public static LlistaPeticionsIntercanvi readIntercanvis(BufferedReader fitxerPeticioIntercanvi) throws IOException {
 
 		LlistaPeticionsIntercanvi aux = new LlistaPeticionsIntercanvi(MAX);
+		String frase;
 
-		while (fitxerPeticioIntercanvi.hasNextLine()) {
-			aux.AfegirPeticio(parseIntercanvis(fitxerPeticioIntercanvi.nextLine()));
+		frase = fitxerPeticioIntercanvi.readLine();
+		while (frase != null) {
+			aux.AfegirPeticio(parseIntercanvis(frase));
+			frase = fitxerPeticioIntercanvi.readLine();
 		}
 		return (aux);
 	}
@@ -380,7 +400,6 @@ public class UsaClasesTest {
 		Scanner atributtes = new Scanner(lineaIntercanvi);
 		atributtes.useDelimiter(";");
 
-		//TODO Controlar contestada
 		aux = new PeticioIntercanvi(atributtes.next());
 		aux.setUsuariEmisor(atributtes.next());
 		aux.setUsuariRemitent(atributtes.next());
@@ -389,6 +408,7 @@ public class UsaClasesTest {
 		aux.setAfirmativa(Boolean.parseBoolean(atributtes.next()));
 		aux.setValoracioEmisor(Integer.parseInt(atributtes.next()));
 		aux.setValoracioRemitent(Integer.parseInt(atributtes.next()));
+		aux.setConstestada(Boolean.parseBoolean(atributtes.next()));
 
 		atributtes.close();
 

@@ -14,9 +14,9 @@ public class LlistaPeticionsIntercanvi {
         this.numPeticions = 0;
     }
 
-    public void AfegirPeticio(PeticioIntercanvi codiIntercanvi) {
+    public void AfegirPeticio(PeticioIntercanvi intercanvi) {
 
-        llista[numPeticions] = codiIntercanvi.copia();
+        llista[numPeticions] = intercanvi.copia();
         numPeticions++;
     }
 
@@ -43,7 +43,7 @@ public class LlistaPeticionsIntercanvi {
     /**
      * Métode que retorna la posicio d'un intercanvi dintre d'una llista, retorna -1 si no existeix
      * @param codiIntercanvi
-     * @return
+     * @return posTrobat
      */
     public int existeix(String codiIntercanvi) {
 
@@ -64,6 +64,59 @@ public class LlistaPeticionsIntercanvi {
         return (posTrobat);
     }
 
+
+    /**
+     * Mètode que retorna en format text totes les peticions per respondre
+     * @return text
+     */
+    public String toStringPerRespondre() {
+        String text = "";
+
+        for (int i = 0; i < numPeticions; i++) {
+            if (!llista[i].getConstestada()) {
+                text += llista[i].toString() + "\n";;
+            }
+        }
+
+        return (text);
+    }
+
+    /**
+     * Mètode que retorna en format text totes les peticions acceptades
+     * @return text
+     */
+    public String toStringAcceptades() {
+        String text = "";
+
+        for (int i = 0; i < numPeticions; i++) {
+            if (llista[i].getAfirmativa()) {
+                text += llista[i].toString() + "\n";;
+            }
+        }
+
+        return (text);
+    }
+
+    /**
+     * Mètode que retorna en format text totes les peticions refusades
+     * @return text
+     */
+    public String toStringRefusades() {
+        String text = "";
+
+        for (int i = 0; i < numPeticions; i++) {
+            if (!llista[i].getAfirmativa()) {
+                text += llista[i].toString() + "\n";
+            }
+        }
+
+        return (text);
+    }
+
+    /**
+     * Mètode que retorna en format text totes les peticions
+     * @return text
+     */
     public String toString() {
 
         String text = "";
