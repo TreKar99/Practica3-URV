@@ -3,6 +3,8 @@
 package aplication;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import classes.*;
@@ -21,11 +23,10 @@ public class UsaClasesTest {
 		// Lectura dels fitxers de productes i intercanvis
 		BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
 		BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
-		
-		//BufferedWriter test = new BufferedWriter(new FileWriter("intercanvisTest.txt"));
+		BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(new FileWriter("intercanvisTestcopy.txt"));
 
 		LlistaProductes llistaProductes = readProductes(fitxerProductes);
-		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
+		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi, escriuPeticionsIntercanvi);
 		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(5);
 
 		// Menú de consola
@@ -46,7 +47,7 @@ public class UsaClasesTest {
 					opcio4(llistaProductes);
 					break;
 				case 5:
-					opcio5();
+					opcio5(llistaProductes, escriuPeticionsIntercanvi);
 					break;
 				case 6:
 					opcio6();
@@ -83,6 +84,7 @@ public class UsaClasesTest {
 					break;
 				case 17:
 					opcio17(opcio);
+					escriuPeticionsIntercanvi.close();
 					break;
 			}
 
@@ -91,11 +93,6 @@ public class UsaClasesTest {
 
 		}
 
-		/*
-		test.write("hola");
-		test.newLine();
-		test.close();
-		*/
 
 	}
 
@@ -184,8 +181,31 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que afegeix una nova oferta de serveis
+	 * @throws IOException
 	 */
-	public static void opcio5() {
+	public static void opcio5(LlistaProductes p, BufferedWriter escriu) throws IOException {
+
+		Servei aux;
+		String codiTeclat, descTeclat, dataOfertaTeclat, fiOferimentTeclat;
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime now = LocalDateTime.now();
+
+		System.out.println("Introudeix el codi del servei");
+		codiTeclat = teclat.nextLine();
+		System.out.println("Introudeix la descripció del servei");
+		descTeclat = teclat.nextLine();
+		dataOfertaTeclat = dtf.format(now);
+		System.out.println("Introudeix la data fi del del servei");
+		fiOferimentTeclat = teclat.nextLine();
+
+		aux = new Servei(codiTeclat, descTeclat, dataOfertaTeclat, fiOferimentTeclat);
+
+		p.afegirProducte(aux);
+
+		escriu.write(codiTeclat + ";" + descTeclat + ";" + dataOfertaTeclat + ";" + fiOferimentTeclat);
+		escriu.newLine();
+		escriu.flush();
 
 	}
 
@@ -329,7 +349,7 @@ public class UsaClasesTest {
 	public static Producte parseProductes(String lineaProducte) {
 
 		Producte p;
-		String codi, descripcio, tipus, dataOferta, fiOferiment;
+		String codi, descripcio, tipus, dataOferta, fiOferiment, dataIntercanvi;
 		float amplada, alcada, fons, pes;
 
 		Scanner atributtes = new Scanner(lineaProducte);
@@ -342,13 +362,13 @@ public class UsaClasesTest {
 
 		if (tipus.toLowerCase().equals("be")) {
 
-			// TODO controlar dataIntercanvi
 			amplada = Float.parseFloat(atributtes.next());
 			alcada = Float.parseFloat(atributtes.next());
 			fons = Float.parseFloat(atributtes.next());
 			pes = Float.parseFloat(atributtes.next());
+			dataIntercanvi = atributtes.next();
 
-			Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes);
+			Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes, dataIntercanvi);
 			p = aux.copia();
 
 		} else if (tipus.toLowerCase().equals("servei")) {
@@ -374,7 +394,7 @@ public class UsaClasesTest {
 	 * @return LlistaPeticionsIntercanvi
 	 * @throws IOException
 	 */
-	public static LlistaPeticionsIntercanvi readIntercanvis(BufferedReader fitxerPeticioIntercanvi) throws IOException {
+	public static LlistaPeticionsIntercanvi readIntercanvis(BufferedReader fitxerPeticioIntercanvi, BufferedWriter escriu) throws IOException {
 
 		LlistaPeticionsIntercanvi aux = new LlistaPeticionsIntercanvi(MAX);
 		String frase;
@@ -382,8 +402,11 @@ public class UsaClasesTest {
 		frase = fitxerPeticioIntercanvi.readLine();
 		while (frase != null) {
 			aux.AfegirPeticio(parseIntercanvis(frase));
+			escriu.write(frase);
+			escriu.newLine();
 			frase = fitxerPeticioIntercanvi.readLine();
 		}
+		escriu.flush();
 		return (aux);
 	}
 
