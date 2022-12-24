@@ -22,11 +22,15 @@ public class UsaClasesTest {
 		int opcio;
 		// Lectura dels fitxers de productes i intercanvis
 		BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
-		BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
-		BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(new FileWriter("intercanvisTestcopy.txt"));
+		FileWriter fileProducte = new FileWriter("productesTest.txt", true);
+		BufferedWriter escriuProductes = new BufferedWriter(fileProducte);
+
+		Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
+		FileWriter fileIntercanvi = new FileWriter("intercanvisTest.txt", true);
+		BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(fileIntercanvi);
 
 		LlistaProductes llistaProductes = readProductes(fitxerProductes);
-		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi, escriuPeticionsIntercanvi);
+		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
 		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(5);
 
 		// Menú de consola
@@ -47,10 +51,10 @@ public class UsaClasesTest {
 					opcio4(llistaProductes);
 					break;
 				case 5:
-					opcio5(llistaProductes, escriuPeticionsIntercanvi);
+					opcio5(llistaProductes, escriuProductes);
 					break;
 				case 6:
-					opcio6();
+					opcio6(llistaProductes, escriuProductes);
 					break;
 				case 7:
 					opcio7();
@@ -90,6 +94,7 @@ public class UsaClasesTest {
 
 			mostraMenu();
 			opcio = Integer.parseInt(teclat.nextLine());
+			System.out.println("Opció introduida");
 
 		}
 
@@ -203,8 +208,8 @@ public class UsaClasesTest {
 
 		p.afegirProducte(aux);
 
-		escriu.write(codiTeclat + ";" + descTeclat + ";" + dataOfertaTeclat + ";" + fiOferimentTeclat);
 		escriu.newLine();
+		escriu.write(codiTeclat + ";" + descTeclat + ";servei;" + dataOfertaTeclat + ";" + fiOferimentTeclat);
 		escriu.flush();
 
 	}
@@ -212,7 +217,35 @@ public class UsaClasesTest {
 	/**
 	 * Métode que afegeix un nou producte a intercanviar
 	 */
-	public static void opcio6() {
+	public static void opcio6(LlistaProductes p, BufferedWriter escriu) throws IOException {
+		Be aux;
+		String codiTeclat, descTeclat, dataOfertaTeclat;
+		float amplada, alcada, fons, pes;
+
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime now = LocalDateTime.now();
+
+		System.out.println("Introudeix el codi del be");
+		codiTeclat = teclat.nextLine();
+		System.out.println("Introudeix la descripció del be");
+		descTeclat = teclat.nextLine();
+		dataOfertaTeclat = dtf.format(now);
+		System.out.println("Introudeix la amplada del producte");
+		amplada = Float.parseFloat(teclat.nextLine());
+		System.out.println("Introudeix la alçada del producte");
+		alcada = Float.parseFloat(teclat.nextLine());
+		System.out.println("Introudeix la fondaria del producte");
+		fons = Float.parseFloat(teclat.nextLine());
+		System.out.println("Introudeix la pes del producte");
+		pes = Float.parseFloat(teclat.nextLine());
+
+		aux = new Be(codiTeclat, descTeclat, dataOfertaTeclat, amplada, alcada, fons, pes);
+		p.afegirProducte(aux);
+
+		escriu.newLine();
+		escriu.write(codiTeclat + ";" + descTeclat + ";be;" + dataOfertaTeclat + ";" + amplada + ";" + alcada + ";" + fons + ";" + pes);
+		escriu.flush();
 
 	}
 
@@ -220,6 +253,13 @@ public class UsaClasesTest {
 	 * Métode que afegeix una petició d'intercanvi
 	 */
 	public static void opcio7() {
+		String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
+		boolean afirmativa, constestada;
+		int valoracioEmisor, valoracioRemitent;
+
+		// TODO valoracio del que la crea
+		// TODO important saber identificar el usuari que esta creant la petició
+		// TODO la resta es anar copiant el que hi ha a afegir productes
 
 	}
 
@@ -244,6 +284,8 @@ public class UsaClasesTest {
 			intercanvis.refusa(codiIntercanvi);
 		}
 
+		// TODO Si s'ha acceptat s'ha de donar una valoració del que ha acceptat
+
 		System.out.println("Acció realitzada!");
 	}
 
@@ -259,14 +301,14 @@ public class UsaClasesTest {
 	 * l'elimina de la llista
 	 */
 	public static void opcio10() {
-
+		//TODO crear una funcio que elimina un be de la llista i mou la resta de productes de la llista de manera correcta
 	}
 
 	/**
 	 * Métode que desactiva un servei sense esborrarlo de la llista
 	 */
 	public static void opcio11() {
-
+		//TODO crear una funcio que elimina un servei de la llista i mou la resta de productes de la llista de manera correcta
 	}
 
 	/**
@@ -295,7 +337,7 @@ public class UsaClasesTest {
 	 * superiors a les indicades
 	 */
 	public static void opcio15() {
-
+		//TODO crer un metode que mira la llista de usuaris i printeja el usuari amb valoracions superiors a la indicada per teclat
 	}
 
 	/**
@@ -303,7 +345,7 @@ public class UsaClasesTest {
 	 * de ells
 	 */
 	public static void opcio16() {
-
+		// TODO crear un metode que mostri els serveis mes intercanviats i quantes vegades s'ha intercanviat
 	}
 
 	/**
@@ -366,11 +408,17 @@ public class UsaClasesTest {
 			alcada = Float.parseFloat(atributtes.next());
 			fons = Float.parseFloat(atributtes.next());
 			pes = Float.parseFloat(atributtes.next());
-			dataIntercanvi = atributtes.next();
+			
 
-			Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes, dataIntercanvi);
-			p = aux.copia();
-
+			if (atributtes.hasNext()) {
+				dataIntercanvi = atributtes.next();
+				Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes, dataIntercanvi);
+				p = aux.copia();
+			} else {
+				Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes);
+				p = aux.copia();
+			}
+			
 		} else if (tipus.toLowerCase().equals("servei")) {
 
 			fiOferiment = atributtes.next();
@@ -394,19 +442,15 @@ public class UsaClasesTest {
 	 * @return LlistaPeticionsIntercanvi
 	 * @throws IOException
 	 */
-	public static LlistaPeticionsIntercanvi readIntercanvis(BufferedReader fitxerPeticioIntercanvi, BufferedWriter escriu) throws IOException {
+	public static LlistaPeticionsIntercanvi readIntercanvis(Scanner fitxerPeticioIntercanvi) throws IOException {
 
 		LlistaPeticionsIntercanvi aux = new LlistaPeticionsIntercanvi(MAX);
 		String frase;
 
-		frase = fitxerPeticioIntercanvi.readLine();
-		while (frase != null) {
+		while (fitxerPeticioIntercanvi.hasNext()) {
+			frase = fitxerPeticioIntercanvi.nextLine();
 			aux.AfegirPeticio(parseIntercanvis(frase));
-			escriu.write(frase);
-			escriu.newLine();
-			frase = fitxerPeticioIntercanvi.readLine();
 		}
-		escriu.flush();
 		return (aux);
 	}
 
