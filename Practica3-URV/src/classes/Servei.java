@@ -1,16 +1,15 @@
 package classes;
 
-import java.time.Month;
-import java.util.Currency;
-
-import javax.xml.crypto.Data;
-
-import java.sql.Date;
 import java.time.*;
 
 public class Servei extends Producte {
 
     private String fiOferiment;
+
+    public Servei(String codi, String descripcio,String dataOferta, String fiOferiment) {
+        super(codi, descripcio, "servei", dataOferta);
+        this.fiOferiment = fiOferiment;
+    }
 
     public Servei(String codi, String descripcio, String tipus, String dataOferta, String fiOferiment) {
         super(codi, descripcio, tipus, dataOferta);
@@ -60,7 +59,7 @@ public class Servei extends Producte {
     }
 
     public String toString() {
-        return ("Es un servei " + fiOferiment);
+        return ("El servei " + super.getCodi() + " " + super.getDescripcio() + " " + super.getDataOferta() + " " + fiOferiment);
     }
 
 }

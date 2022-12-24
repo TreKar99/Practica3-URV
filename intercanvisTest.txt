@@ -1,3 +1,3 @@
-intercanvi1;Toni;German;Dildo;Plug-anal;true;5;3
-invercanvi2;Philippe;Angela;Mechero;Porrete;false;4;1
-INT0002;Randi;Orton;Mesa;Silla;false;2;1
+intercanvi1;Toni;German;Dildo;Plug-anal;true;5;3;false
+invercanvi2;Philippe;Angela;Mechero;Porrete;false;4;1;false
+INT0002;Randi;Orton;Mesa;Silla;false;2;1;false

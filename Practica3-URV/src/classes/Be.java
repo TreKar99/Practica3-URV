@@ -7,6 +7,16 @@ public class Be extends Producte {
 
     // TODO tenir en compte la dataIntercanvi;
 
+    public Be(String codi, String descripcio, String dataOferta, float amplada, float alcada, float fons,
+            float pes) {
+        super(codi, descripcio, "be", dataOferta);
+        this.amplada = amplada;
+        this.alcada = alcada;
+        this.fons = fons;
+        this.pes = pes;
+
+    }
+
     public Be(String codi, String descripcio, String tipus, String dataOferta, float amplada, float alcada, float fons,
             float pes) {
         super(codi, descripcio, tipus, dataOferta);
@@ -14,6 +24,16 @@ public class Be extends Producte {
         this.alcada = alcada;
         this.fons = fons;
         this.pes = pes;
+    }
+
+    public Be(String codi, String descripcio, String tipus, String dataOferta, float amplada, float alcada, float fons,
+            float pes, String dataIntercanvi) {
+        super(codi, descripcio, tipus, dataOferta);
+        this.amplada = amplada;
+        this.alcada = alcada;
+        this.fons = fons;
+        this.pes = pes;
+        this.dataIntercanvi = dataIntercanvi;
     }
 
     /**
@@ -40,6 +60,6 @@ public class Be extends Producte {
     }
 
     public String toString() {
-        return ("Es un be " + amplada + " " + alcada + " " + fons + " " + pes);
+        return ("Es un be " + amplada + " " + alcada + " " + fons + " " + pes + " " + dataIntercanvi);
     }
 }
