@@ -3,12 +3,14 @@ package classes;
 public abstract class Producte {
     
     private String codi, descripcio, tipus, dataOferta;
+    private Usuari usuari;
 
-    public Producte(String codi, String descripcio, String tipus, String dataOferta) {
+    public Producte(String codi, String descripcio, String tipus, String dataOferta, Usuari usuari) {
         this.codi = codi;
         this.descripcio = descripcio;
         this.tipus = tipus;
         this.dataOferta = dataOferta;
+        this.usuari = usuari;
     }
 
     public String getCodi() {
@@ -46,4 +48,12 @@ public abstract class Producte {
     public abstract boolean estaActiu();
     public abstract Producte copia();
     public abstract String toString();
+
+    public Usuari getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(Usuari usuari) {
+        this.usuari = usuari;
+    }
 }

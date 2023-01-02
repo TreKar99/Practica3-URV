@@ -2,8 +2,10 @@ package classes;
 
 public class PeticioIntercanvi {
     
-    private String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
-    private boolean afirmativa, constestada;
+    private int codi;
+    private Producte prodEmisor, prodRemitent;
+    private Usuari usuEmisor, usuRemitent;
+    private boolean acceptaIntercanvi, contestada;
     private int valoracioEmisor, valoracioRemitent;
 
 
@@ -14,7 +16,7 @@ public class PeticioIntercanvi {
      * Els béns 1 intercanvi
      * Els serveis N intercanvis
     */
-    public PeticioIntercanvi(String codi) {
+    public PeticioIntercanvi(int codi) {
         this.codi = codi;
     }
 
@@ -26,84 +28,48 @@ public class PeticioIntercanvi {
      * @param pRebre
      * @param pOferit
      */
-    public PeticioIntercanvi(String codi, String emisor, String remitent, String pRebre, String pOferit)
+    public PeticioIntercanvi(int codi, Usuari emisor, Usuari remitent, Producte pEmisor, Producte pRemitent)
     {
         this.codi = codi;
-        this.usuariEmisor = emisor; 
-        this.usuariRemitent = remitent; 
-        this.producteRebre = pRebre;
-        this.producteOferit = pOferit;
-        this.afirmativa = false;
-        this.constestada = false;
+        this.usuEmisor = emisor; 
+        this.usuRemitent = remitent; 
+        this.prodEmisor = pEmisor;
+        this.prodRemitent = pRemitent;
+        this.acceptaIntercanvi = false;
+        this.contestada = false;
     }
 
 
-    public String getCodi() {
+    public int getCodi() {
         return this.codi;
     }
 
-    public void setCodi(String codi) {
+    public void setCodi(int codi) {
         this.codi = codi;
     }
 
-    public String getUsuariEmisor() {
-        return this.usuariEmisor;
+    public boolean intercanviAcceptat() {
+        return this.acceptaIntercanvi;
     }
 
-    public void setUsuariEmisor(String usuariEmisor) {
-        this.usuariEmisor = usuariEmisor;
-    }
-
-    public String getUsuariRemitent() {
-        return this.usuariRemitent;
-    }
-
-    public void setUsuariRemitent(String usuariRemitent) {
-        this.usuariRemitent = usuariRemitent;
-    }
-
-    public String getProducteRebre() {
-        return this.producteRebre;
-    }
-
-    public void setProducteRebre(String producteRebre) {
-        this.producteRebre = producteRebre;
-    }
-
-    public String getProducteOferit() {
-        return this.producteOferit;
-    }
-
-    public void setProducteOferit(String producteOferit) {
-        this.producteOferit = producteOferit;
-    }
-
-    public boolean isAfirmativa() {
-        return this.afirmativa;
-    }
-
-    public boolean getAfirmativa() {
-        return this.afirmativa;
-    }
-
-    public void setAfirmativa(boolean afirmativa) {
-        this.afirmativa = afirmativa;
+    public void setIntercanviAcceptat(boolean acceptaIntercanvi) {
+        this.acceptaIntercanvi = acceptaIntercanvi;
     }
 
     public int getValoracioEmisor() {
         return this.valoracioEmisor;
     }
 
-    public boolean isConstestada() {
-        return this.constestada;
+    public boolean isContestada() {
+        return this.contestada;
     }
 
-    public boolean getConstestada() {
-        return this.constestada;
+    public boolean getContestada() {
+        return this.contestada;
     }
 
-    public void setConstestada(boolean constestada) {
-        this.constestada = constestada;
+    public void setContestada(boolean contestada) {
+        this.contestada = contestada;
     }
 
     public void setValoracioEmisor(int valoracioEmisor) {
@@ -126,19 +92,51 @@ public class PeticioIntercanvi {
 
         PeticioIntercanvi aux = new PeticioIntercanvi(this.codi);
 
-        aux.usuariEmisor = this.usuariEmisor;
-        aux.usuariRemitent = this.usuariRemitent;
-        aux.producteRebre = this.producteRebre;
-        aux.producteOferit = this.producteOferit;
-        aux.afirmativa = this.afirmativa;
+        aux.usuEmisor = this.usuEmisor;
+        aux.usuRemitent = this.usuRemitent;
+        aux.prodEmisor = this.prodEmisor;
+        aux.prodRemitent = this.prodRemitent;
+        aux.acceptaIntercanvi = this.acceptaIntercanvi;
         aux.valoracioEmisor = this.valoracioEmisor;
         aux.valoracioRemitent = this.valoracioRemitent;
-        aux.constestada = this.constestada;
+        aux.contestada = this.contestada;
 
         return (aux);
     }
 
     public String toString() {
-        return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + constestada);
+        return ("La peticio: " + codi + " emesa per l'usuari: " + usuEmisor + " rebra el producte " + prodRemitent + " i oferira el producte " + prodEmisor + " al usuari " + usuRemitent + ". Aquesta peticio es " + acceptaIntercanvi + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + contestada);
+    }
+
+    public Producte getProdEmisor() {
+        return prodEmisor;
+    }
+
+    public void setProdEmisor(Producte prodEmisor) {
+        this.prodEmisor = prodEmisor;
+    }
+
+    public Producte getProdRemitent() {
+        return prodRemitent;
+    }
+
+    public void setProdRemitent(Producte prodRemitent) {
+        this.prodRemitent = prodRemitent;
+    }
+
+    public Usuari getUsuEmisor() {
+        return usuEmisor;
+    }
+
+    public void setUsuEmisor(Usuari usuEmisor) {
+        this.usuEmisor = usuEmisor;
+    }
+
+    public Usuari getUsuRemitent() {
+        return usuRemitent;
+    }
+
+    public void setUsuRemitent(Usuari usuRemitent) {
+        this.usuRemitent = usuRemitent;
     }
 }

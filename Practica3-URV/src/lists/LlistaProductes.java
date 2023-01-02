@@ -1,8 +1,6 @@
 package lists;
 
-import classes.Producte;
-import classes.Be;
-import classes.Servei;
+import classes.*;
 
 public class LlistaProductes {
     private Producte[] llista;
@@ -25,6 +23,13 @@ public class LlistaProductes {
 
     }
 
+    public Producte getProducte(int num) {
+        return (llista[num]);
+    }
+
+    public String getAliesProducte(int num) {
+        return (llista[num].getUsuari().getAlies());
+    }
     /**
      * Métode que retorna els serveis actius
      * 
@@ -59,7 +64,7 @@ public class LlistaProductes {
         }
         return (text);
     }
-
+    
     /**
      * Métode que retorna els serveis
      * 
@@ -106,5 +111,37 @@ public class LlistaProductes {
 
         return (text);
 
+    }
+
+    public Producte[] getLlista() {
+        return llista;
+    }
+
+    public void setLlista(Producte[] llista) {
+        this.llista = llista;
+    }
+
+    public int getNumProductes() {
+        return numProductes;
+    }
+
+    public void setNumProductes(int numProductes) {
+        this.numProductes = numProductes;
+    }
+
+    public int getNumBens() {
+        return numBens;
+    }
+
+    public void setNumBens(int numBens) {
+        this.numBens = numBens;
+    }
+
+    public int getNumServeis() {
+        return numServeis;
+    }
+
+    public void setNumServeis(int numServeis) {
+        this.numServeis = numServeis;
     }
 }

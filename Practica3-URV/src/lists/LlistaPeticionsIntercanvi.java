@@ -1,6 +1,6 @@
 package lists;
 
-import classes.PeticioIntercanvi;
+import classes.*;
 
 public class LlistaPeticionsIntercanvi {
 
@@ -14,7 +14,7 @@ public class LlistaPeticionsIntercanvi {
         this.numPeticions = 0;
     }
 
-    public void AfegirPeticio(PeticioIntercanvi intercanvi) {
+    public void afegirPeticio(PeticioIntercanvi intercanvi) {
 
         llista[numPeticions] = intercanvi.copia();
         numPeticions++;
@@ -24,9 +24,10 @@ public class LlistaPeticionsIntercanvi {
      * Métode que accepta un intercanvi
      * @param codiIntercanvi
      */
-    public void accepta(String codiIntercanvi) {
-        if (this.existeix(codiIntercanvi) != -1) {
-            llista[this.existeix(codiIntercanvi)].setConstestada(true);
+    public void acceptaIntercanvi(int codiIntercanvi) {
+        if (this.existeixCodiIntercanvi(codiIntercanvi)) {
+            llista[codiIntercanvi].setIntercanviAcceptat(true);
+            llista[codiIntercanvi].setContestada(true);
         }
     }
 
@@ -34,36 +35,31 @@ public class LlistaPeticionsIntercanvi {
      * Métode que refusa un intercanvi
      * @param codiIntercanvi
      */
-    public void refusa(String codiIntercanvi) {
-        if (this.existeix(codiIntercanvi) != -1) {
-            llista[this.existeix(codiIntercanvi)].setConstestada(false);
+    public void refusaIntercanvi(int codiIntercanvi) {
+        if (this.existeixCodiIntercanvi(codiIntercanvi)) {
+            llista[codiIntercanvi].setIntercanviAcceptat(false);
+            llista[codiIntercanvi].setContestada(true);
         }
     }
 
     /**
-     * Métode que retorna la posicio d'un intercanvi dintre d'una llista, retorna -1 si no existeix
+     * Métode que retorna la posicio d'un intercanvi dintre d'una llista, retorna -1 si no getCodiIntercanvi
      * @param codiIntercanvi
      * @return posTrobat
      */
-    public int existeix(String codiIntercanvi) {
+    public boolean existeixCodiIntercanvi(int codiIntercanvi) {
 
         int i = 0;
         boolean existeix = false;
-        int posTrobat = -1;
         while ((i < numPeticions) && (!existeix)) {
-            if (llista[i].getCodi().equals(codiIntercanvi)) {
+            if (llista[i].getCodi() == (codiIntercanvi)) {
                 existeix = true;
             }
             i++;
         }
-        
-        if (existeix) {
-            posTrobat = i;
-        }
 
-        return (posTrobat);
+        return (existeix);
     }
-
 
     /**
      * Mètode que retorna en format text totes les peticions per respondre
@@ -73,7 +69,7 @@ public class LlistaPeticionsIntercanvi {
         String text = "";
 
         for (int i = 0; i < numPeticions; i++) {
-            if (!llista[i].getConstestada()) {
+            if (!llista[i].getContestada()) {
                 text += llista[i].toString() + "\n";;
             }
         }
@@ -89,7 +85,7 @@ public class LlistaPeticionsIntercanvi {
         String text = "";
 
         for (int i = 0; i < numPeticions; i++) {
-            if (llista[i].getAfirmativa()) {
+            if (llista[i].intercanviAcceptat()) {
                 text += llista[i].toString() + "\n";;
             }
         }
@@ -105,7 +101,7 @@ public class LlistaPeticionsIntercanvi {
         String text = "";
 
         for (int i = 0; i < numPeticions; i++) {
-            if (!llista[i].getAfirmativa()) {
+            if (!llista[i].intercanviAcceptat()) {
                 text += llista[i].toString() + "\n";
             }
         }
@@ -126,5 +122,34 @@ public class LlistaPeticionsIntercanvi {
         }
 
         return (text);
+    }
+
+    public PeticioIntercanvi[] getLlista() {
+        return llista;
+    }
+
+    public void setLlista(PeticioIntercanvi[] llista) {
+        this.llista = llista;
+    }
+
+    public int getNumPeticions() {
+        return numPeticions;
+    }
+
+    public void setNumPeticions(int numPeticions) {
+        this.numPeticions = numPeticions;
+    }
+
+    public PeticioIntercanvi getIntercanvi(int num) {
+        return (llista[num]);
+    }
+
+
+    public String getAliesProducte(int num) {
+        return (llista[num].getUsuEmisor().getAlies());
+    }
+
+    public boolean getIntercanviAcceptat(int num) {
+        return (llista[num].intercanviAcceptat());
     }
 }
