@@ -2,7 +2,7 @@ package classes;
 
 public class PeticioIntercanvi {
     
-    private int codi;
+    private String codi;
     private Producte prodEmisor, prodRemitent;
     private Usuari usuEmisor, usuRemitent;
     private boolean acceptaIntercanvi, contestada;
@@ -16,7 +16,7 @@ public class PeticioIntercanvi {
      * Els béns 1 intercanvi
      * Els serveis N intercanvis
     */
-    public PeticioIntercanvi(int codi) {
+    public PeticioIntercanvi(String codi) {
         this.codi = codi;
     }
 
@@ -28,7 +28,7 @@ public class PeticioIntercanvi {
      * @param pRebre
      * @param pOferit
      */
-    public PeticioIntercanvi(int codi, Usuari emisor, Usuari remitent, Producte pEmisor, Producte pRemitent)
+    public PeticioIntercanvi(String codi, Usuari emisor, Usuari remitent, Producte pEmisor, Producte pRemitent)
     {
         this.codi = codi;
         this.usuEmisor = emisor; 
@@ -40,11 +40,11 @@ public class PeticioIntercanvi {
     }
 
 
-    public int getCodi() {
+    public String getCodi() {
         return this.codi;
     }
 
-    public void setCodi(int codi) {
+    public void setCodi(String codi) {
         this.codi = codi;
     }
 
@@ -84,30 +84,6 @@ public class PeticioIntercanvi {
         this.valoracioRemitent = valoracioRemitent;
     }
 
-    /**
-     * Métode per fer una copia de una PeticioIntercanvi
-     * @return PeticioIntercanvi
-     */
-    public PeticioIntercanvi copia() {
-
-        PeticioIntercanvi aux = new PeticioIntercanvi(this.codi);
-
-        aux.usuEmisor = this.usuEmisor;
-        aux.usuRemitent = this.usuRemitent;
-        aux.prodEmisor = this.prodEmisor;
-        aux.prodRemitent = this.prodRemitent;
-        aux.acceptaIntercanvi = this.acceptaIntercanvi;
-        aux.valoracioEmisor = this.valoracioEmisor;
-        aux.valoracioRemitent = this.valoracioRemitent;
-        aux.contestada = this.contestada;
-
-        return (aux);
-    }
-
-    public String toString() {
-        return ("La peticio: " + codi + " emesa per l'usuari: " + usuEmisor + " rebra el producte " + prodRemitent + " i oferira el producte " + prodEmisor + " al usuari " + usuRemitent + ". Aquesta peticio es " + acceptaIntercanvi + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + contestada);
-    }
-
     public Producte getProdEmisor() {
         return prodEmisor;
     }
@@ -138,5 +114,29 @@ public class PeticioIntercanvi {
 
     public void setUsuRemitent(Usuari usuRemitent) {
         this.usuRemitent = usuRemitent;
+    }
+
+    /**
+     * Métode per fer una copia de una PeticioIntercanvi
+     * @return PeticioIntercanvi
+     */
+    public PeticioIntercanvi copia() {
+
+        PeticioIntercanvi aux = new PeticioIntercanvi(this.codi);
+
+        aux.usuEmisor = this.usuEmisor;
+        aux.usuRemitent = this.usuRemitent;
+        aux.prodEmisor = this.prodEmisor;
+        aux.prodRemitent = this.prodRemitent;
+        aux.acceptaIntercanvi = this.acceptaIntercanvi;
+        aux.valoracioEmisor = this.valoracioEmisor;
+        aux.valoracioRemitent = this.valoracioRemitent;
+        aux.contestada = this.contestada;
+
+        return (aux);
+    }
+
+    public String toString() {
+        return ("La peticio: " + codi + " emesa per l'usuari: " + usuEmisor + " rebra el producte " + prodRemitent + " i oferira el producte " + prodEmisor + " al usuari " + usuRemitent + ". Aquesta peticio es " + acceptaIntercanvi + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + contestada);
     }
 }

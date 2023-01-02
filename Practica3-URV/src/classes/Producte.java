@@ -5,6 +5,13 @@ public abstract class Producte {
     private String codi, descripcio, tipus, dataOferta;
     private Usuari usuari;
 
+    public Producte(String codi, String descripcio, String tipus, String dataOferta) {
+        this.codi = codi;
+        this.descripcio = descripcio;
+        this.tipus = tipus;
+        this.dataOferta = dataOferta;
+    }
+
     public Producte(String codi, String descripcio, String tipus, String dataOferta, Usuari usuari) {
         this.codi = codi;
         this.descripcio = descripcio;
@@ -45,10 +52,6 @@ public abstract class Producte {
         this.dataOferta = dataOferta;
     }
 
-    public abstract boolean estaActiu();
-    public abstract Producte copia();
-    public abstract String toString();
-
     public Usuari getUsuari() {
         return usuari;
     }
@@ -56,4 +59,8 @@ public abstract class Producte {
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
     }
+
+    public abstract boolean estaActiu();
+    public abstract Producte copia();
+    public abstract String toString();
 }

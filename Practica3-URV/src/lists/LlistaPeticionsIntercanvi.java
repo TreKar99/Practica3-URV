@@ -24,10 +24,11 @@ public class LlistaPeticionsIntercanvi {
      * Métode que accepta un intercanvi
      * @param codiIntercanvi
      */
-    public void acceptaIntercanvi(int codiIntercanvi) {
-        if (this.existeixCodiIntercanvi(codiIntercanvi)) {
-            llista[codiIntercanvi].setIntercanviAcceptat(true);
-            llista[codiIntercanvi].setContestada(true);
+    public void acceptaIntercanvi(String codiIntercanvi) {
+        int posIntercanvi = this.existeixCodiIntercanvi(codiIntercanvi);
+        if (posIntercanvi  != -1) {
+            llista[posIntercanvi].setIntercanviAcceptat(true);
+            llista[posIntercanvi].setContestada(true);
         }
     }
 
@@ -35,10 +36,11 @@ public class LlistaPeticionsIntercanvi {
      * Métode que refusa un intercanvi
      * @param codiIntercanvi
      */
-    public void refusaIntercanvi(int codiIntercanvi) {
-        if (this.existeixCodiIntercanvi(codiIntercanvi)) {
-            llista[codiIntercanvi].setIntercanviAcceptat(false);
-            llista[codiIntercanvi].setContestada(true);
+    public void refusaIntercanvi(String codiIntercanvi) {
+        int posIntercanvi = this.existeixCodiIntercanvi(codiIntercanvi);
+        if (posIntercanvi  != -1) {
+            llista[posIntercanvi].setIntercanviAcceptat(false);
+            llista[posIntercanvi].setContestada(true);
         }
     }
 
@@ -47,18 +49,19 @@ public class LlistaPeticionsIntercanvi {
      * @param codiIntercanvi
      * @return posTrobat
      */
-    public boolean existeixCodiIntercanvi(int codiIntercanvi) {
-
+    public int existeixCodiIntercanvi(String codiIntercanvi) {
         int i = 0;
+        int posIntercanvi = -1;
         boolean existeix = false;
         while ((i < numPeticions) && (!existeix)) {
             if (llista[i].getCodi() == (codiIntercanvi)) {
                 existeix = true;
+                posIntercanvi = i;
             }
             i++;
         }
 
-        return (existeix);
+        return (posIntercanvi);
     }
 
     /**

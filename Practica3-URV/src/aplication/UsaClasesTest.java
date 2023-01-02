@@ -271,7 +271,7 @@ public class UsaClasesTest {
 
 		System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
 		codiIntercanvi = teclat.nextLine();
-		while (intercanvis.existeix(codiIntercanvi) == -1) {
+		while (intercanvis.existeixCodiIntercanvi(codiIntercanvi) == -1) {
 			System.out.println("Aquesta petició no existeix");
 			System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
 			codiIntercanvi = teclat.nextLine();
@@ -279,9 +279,9 @@ public class UsaClasesTest {
 
 		System.out.println("Vols acceptar o refusar aquesta peticio? (Y/n)");
 		if (teclat.nextLine().toLowerCase().equals("y")) {
-			intercanvis.accepta(codiIntercanvi);
+			intercanvis.acceptaIntercanvi(codiIntercanvi);
 		} else if (teclat.nextLine().toLowerCase().equals("n")) {
-			intercanvis.refusa(codiIntercanvi);
+			intercanvis.refusaIntercanvi(codiIntercanvi);
 		}
 
 		// TODO Si s'ha acceptat s'ha de donar una valoració del que ha acceptat
@@ -472,10 +472,10 @@ public class UsaClasesTest {
 		aux.setUsuariRemitent(atributtes.next());
 		aux.setProducteOferit(atributtes.next());
 		aux.setProducteRebre(atributtes.next());
-		aux.setAfirmativa(Boolean.parseBoolean(atributtes.next()));
+		aux.setIntercanviAcceptat(Boolean.parseBoolean(atributtes.next()));
 		aux.setValoracioEmisor(Integer.parseInt(atributtes.next()));
 		aux.setValoracioRemitent(Integer.parseInt(atributtes.next()));
-		aux.setConstestada(Boolean.parseBoolean(atributtes.next()));
+		aux.setContestada(Boolean.parseBoolean(atributtes.next()));
 
 		atributtes.close();
 

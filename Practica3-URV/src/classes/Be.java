@@ -5,8 +5,6 @@ public class Be extends Producte {
     private float amplada, alcada, fons, pes;
     private String dataIntercanvi;
 
-    // TODO tenir en compte la dataIntercanvi;
-
     public Be(String codi, String descripcio, String dataOferta, float amplada, float alcada, float fons,
             float pes) {
         super(codi, descripcio, "be", dataOferta);
