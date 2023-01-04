@@ -22,6 +22,28 @@ public class LlistaProductes {
         numProductes++;
 
     }
+    
+    public Boolean eliminarProducte(String codi) {
+    	int i;
+    	boolean trobat = false;
+    	i = buscarProducte(codi);
+    	if (i != -1)
+    		trobat = true;
+    	if (trobat) {
+    		if (llista[i].estaActiu() && (llista[i].getTipus().equals("be"))) {
+    			llista[i].desactivar();
+    			while (i < numProductes) {
+        			llista[i] = llista[i+1];
+        			i++;
+        		}
+        		numProductes--;
+    		}
+    		else
+    			trobat = false;
+    	}
+    	
+    	return(trobat);
+    }
 
     public Producte getProducte(int num) {
         return (llista[num]);
@@ -64,6 +86,29 @@ public class LlistaProductes {
         }
         return (text);
     }
+    
+    /**
+     * Metodo que busca un producto a partir de su codigo
+     * @param codi
+     * @return la posicion del producto, -1 si no está
+     */
+    public int buscarProducte(String codi) {
+    	int i = 0;
+    	boolean trobat = false;
+    	while (i < numProductes && !trobat)
+    	{
+    		if (codi.equalsIgnoreCase(llista[i].getCodi()))
+    			trobat = true;
+    		else
+    			i++;
+    	}
+    	
+    	if (!trobat)
+    		i = -1;
+    	
+    	return i;
+    }
+    
     
     /**
      * Métode que retorna els serveis

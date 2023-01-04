@@ -66,10 +66,10 @@ public class UsaClasesTest {
 					opcio9();
 					break;
 				case 10:
-					opcio10();
+					opcio10(llistaProductes);
 					break;
 				case 11:
-					opcio11();
+					opcio11(llistaProductes);
 					break;
 				case 12:
 					opcio12(llistaIntercanvis);
@@ -81,10 +81,10 @@ public class UsaClasesTest {
 					opcio14(llistaIntercanvis);
 					break;
 				case 15:
-					opcio15();
+					opcio15(llistaIntercanvis);
 					break;
 				case 16:
-					opcio16();
+					opcio16(llistaIntercanvis);
 					break;
 				case 17:
 					opcio17(opcio);
@@ -300,15 +300,33 @@ public class UsaClasesTest {
 	 * Métode que dona de baixa un bé o producte fisic i
 	 * l'elimina de la llista
 	 */
-	public static void opcio10() {
+	public static void opcio10(LlistaProductes llista) {
 		//TODO crear una funcio que elimina un be de la llista i mou la resta de productes de la llista de manera correcta
+		String codi;
+		System.out.println("Introdueix el be a eliminar");
+		codi = teclat.nextLine();
+		if (llista.eliminarProducte(codi))
+			System.out.println("Producte eliminat");
+		else
+			System.out.println("Producte no eliminat");
 	}
 
 	/**
 	 * Métode que desactiva un servei sense esborrarlo de la llista
 	 */
-	public static void opcio11() {
+	public static void opcio11(LlistaProductes llista) {
 		//TODO crear una funcio que elimina un servei de la llista i mou la resta de productes de la llista de manera correcta
+		String codi;
+		int i;
+		System.out.println("Introdueix el servei a desactivar");
+		codi = teclat.nextLine();
+		i = llista.buscarProducte(codi);
+		if (i != -1 && llista.getProducte(i).getTipus().equals("servei")) {
+			llista.getProducte(i).desactivar();
+			System.out.println("El servicio " + codi + " se ha desactivado");
+		}
+		else
+			System.out.println("El servicio " + codi + " no se ha encontrado");
 	}
 
 	/**
@@ -336,16 +354,23 @@ public class UsaClasesTest {
 	 * Métode que mostra els usuaris que tenen valoracions
 	 * superiors a les indicades
 	 */
-	public static void opcio15() {
+	public static void opcio15(LlistaPeticionsIntercanvi intercanvis) {
 		//TODO crer un metode que mira la llista de usuaris i printeja el usuari amb valoracions superiors a la indicada per teclat
-	}
+		int llindar;
+		System.out.println("Introdueix el llindar");
+		do
+			llindar = Integer.parseInt(teclat.nextLine());
+		while (llindar < 0 || llindar > 5);
+		System.out.println("Los usuarios son: " + intercanvis.usuarisLlindar(llindar));
+		}
 
 	/**
 	 * Métode que mostra el servei amb mes intercanvis i el núm
 	 * de ells
 	 */
-	public static void opcio16() {
+	public static void opcio16(LlistaPeticionsIntercanvi intercanvis) {
 		// TODO crear un metode que mostri els serveis mes intercanviats i quantes vegades s'ha intercanviat
+		System.out.println("El servei mes intercanviat es: " + intercanvis.serveiMesIntercanviat());
 	}
 
 	/**
@@ -449,7 +474,7 @@ public class UsaClasesTest {
 
 		while (fitxerPeticioIntercanvi.hasNext()) {
 			frase = fitxerPeticioIntercanvi.nextLine();
-			aux.AfegirPeticio(parseIntercanvis(frase));
+			aux.afegirPeticio(parseIntercanvis(frase));
 		}
 		return (aux);
 	}
@@ -472,10 +497,10 @@ public class UsaClasesTest {
 		aux.setUsuariRemitent(atributtes.next());
 		aux.setProducteOferit(atributtes.next());
 		aux.setProducteRebre(atributtes.next());
-		aux.setIntercanviAcceptat(Boolean.parseBoolean(atributtes.next()));
+		aux.setContestada(Boolean.parseBoolean(atributtes.next()));
 		aux.setValoracioEmisor(Integer.parseInt(atributtes.next()));
 		aux.setValoracioRemitent(Integer.parseInt(atributtes.next()));
-		aux.setContestada(Boolean.parseBoolean(atributtes.next()));
+		aux.setAfirmativa(Boolean.parseBoolean(atributtes.next()));
 
 		atributtes.close();
 

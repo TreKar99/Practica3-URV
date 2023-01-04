@@ -12,11 +12,28 @@ public class LlistaUsuaris {
         this.numUsuaris = 0;
     }
 
-    public void AfegirUsuari(Usuari currUsuari) {
-        llista[numUsuaris] = new Usuari(currUsuari);
-        numUsuaris++;
+    public void afegirUsuari(Usuari currUsuari) {
+        if ( buscarUsuari(currUsuari.getAlies()) == -1) {
+        	llista[numUsuaris] = currUsuari.copia();
+        	numUsuaris++;
+        }		
     }
-
+    
+    public int buscarUsuari(String nom) {
+    	int i = 0;
+    	boolean trobat = false;
+    	while (i < numUsuaris && !trobat) {
+    		if (llista[i].getAlies().compareToIgnoreCase(nom) == 0)
+    			trobat = true;
+    		else
+    			i++;
+    	}
+    	
+    	if (!trobat)
+    		i = -1;
+    	
+    	return i;
+    }
     public String toString() {
         String text = "";
 

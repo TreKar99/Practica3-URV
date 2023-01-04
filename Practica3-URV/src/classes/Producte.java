@@ -61,6 +61,7 @@ public abstract class Producte {
     }
 
     public abstract boolean estaActiu();
+    public abstract void desactivar();
     public abstract Producte copia();
     public abstract String toString();
 }
