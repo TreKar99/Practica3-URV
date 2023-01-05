@@ -33,14 +33,12 @@ public class Servei extends Producte {
         boolean actiu = false;
         String[] arrOfDate = fiOferiment.split("/", 3);
         LocalDate currentdate = LocalDate.now();
-
-
-
         if (Integer.parseInt(arrOfDate[2]) <= currentdate.getYear()) {
             if (Integer.parseInt(arrOfDate[1]) <= currentdate.getMonthValue()) {
-                if  (Integer.parseInt(arrOfDate[0]) < currentdate.getDayOfMonth()){
+                if  (Integer.parseInt(arrOfDate[0]) <= currentdate.getDayOfMonth()){
                     actiu = false;
-                } else {
+                } 
+                else {
                     actiu = true;
                 }
             } else {
@@ -53,6 +51,14 @@ public class Servei extends Producte {
         return (actiu);
     }
 
+    public void desactivar()
+    {
+    	String fi = "";
+    	LocalDate currentdate = LocalDate.now();
+    	fi = currentdate.getDayOfMonth() + "/" + currentdate.getMonthValue() + "/" + currentdate.getYear();
+    	fiOferiment = fi;
+    }
+    
     public Servei copia() {
         return (new Servei(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(),
                 fiOferiment));

@@ -5,8 +5,6 @@ public class Be extends Producte {
     private float amplada, alcada, fons, pes;
     private String dataIntercanvi;
 
-    // TODO tenir en compte la dataIntercanvi;
-
     public Be(String codi, String descripcio, String dataOferta, float amplada, float alcada, float fons,
             float pes) {
         super(codi, descripcio, "be", dataOferta);
@@ -49,6 +47,10 @@ public class Be extends Producte {
             return (true);
         }
     }
+    
+    public void desactivar() {
+    	dataIntercanvi = "-1";
+    }
 
     public Be copia() {
 
@@ -60,6 +62,6 @@ public class Be extends Producte {
     }
 
     public String toString() {
-        return ("Es un be " + amplada + " " + alcada + " " + fons + " " + pes + " " + dataIntercanvi);
+        return ("Es un be amb codi: " + super.getCodi() + ", descripcio: " + super.getDescripcio() + ", amplada: " + amplada + ", alcada: " + alcada + ", fondo:  " + fons + ", pes: " + pes + ", data intercanvi: " + dataIntercanvi);
     }
 }

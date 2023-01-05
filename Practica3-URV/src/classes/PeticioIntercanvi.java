@@ -2,8 +2,8 @@ package classes;
 
 public class PeticioIntercanvi {
     
-    private String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
-    private boolean afirmativa, constestada;
+	private String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
+    private boolean afirmativa, contestada;
     private int valoracioEmisor, valoracioRemitent;
 
 
@@ -34,7 +34,7 @@ public class PeticioIntercanvi {
         this.producteRebre = pRebre;
         this.producteOferit = pOferit;
         this.afirmativa = false;
-        this.constestada = false;
+        this.contestada = false;
     }
 
 
@@ -94,16 +94,16 @@ public class PeticioIntercanvi {
         return this.valoracioEmisor;
     }
 
-    public boolean isConstestada() {
-        return this.constestada;
+    public boolean isContestada() {
+        return this.contestada;
     }
 
-    public boolean getConstestada() {
-        return this.constestada;
+    public boolean getContestada() {
+        return this.contestada;
     }
 
-    public void setConstestada(boolean constestada) {
-        this.constestada = constestada;
+    public void setContestada(boolean contestada) {
+        this.contestada = contestada;
     }
 
     public void setValoracioEmisor(int valoracioEmisor) {
@@ -133,12 +133,12 @@ public class PeticioIntercanvi {
         aux.afirmativa = this.afirmativa;
         aux.valoracioEmisor = this.valoracioEmisor;
         aux.valoracioRemitent = this.valoracioRemitent;
-        aux.constestada = this.constestada;
+        aux.contestada = this.contestada;
 
         return (aux);
     }
 
     public String toString() {
-        return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + constestada);
+        return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + contestada);
     }
 }

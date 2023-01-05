@@ -3,12 +3,21 @@ package classes;
 public abstract class Producte {
     
     private String codi, descripcio, tipus, dataOferta;
+    private Usuari usuari;
 
     public Producte(String codi, String descripcio, String tipus, String dataOferta) {
         this.codi = codi;
         this.descripcio = descripcio;
         this.tipus = tipus;
         this.dataOferta = dataOferta;
+    }
+
+    public Producte(String codi, String descripcio, String tipus, String dataOferta, Usuari usuari) {
+        this.codi = codi;
+        this.descripcio = descripcio;
+        this.tipus = tipus;
+        this.dataOferta = dataOferta;
+        this.usuari = usuari;
     }
 
     public String getCodi() {
@@ -43,7 +52,16 @@ public abstract class Producte {
         this.dataOferta = dataOferta;
     }
 
+    public Usuari getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(Usuari usuari) {
+        this.usuari = usuari;
+    }
+
     public abstract boolean estaActiu();
+    public abstract void desactivar();
     public abstract Producte copia();
     public abstract String toString();
 }
