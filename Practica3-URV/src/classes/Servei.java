@@ -56,7 +56,7 @@ public class Servei extends Producte {
     	String fi = "";
     	LocalDate currentdate = LocalDate.now();
     	fi = currentdate.getDayOfMonth() + "/" + currentdate.getMonthValue() + "/" + currentdate.getYear();
-    	fiOferiment = fi;
+    	this.fiOferiment = fi;
     }
     
     public Servei copia() {
@@ -66,6 +66,10 @@ public class Servei extends Producte {
 
     public String toString() {
         return ("El servei " + super.getCodi() + " " + super.getDescripcio() + " " + super.getDataOferta() + " " + fiOferiment);
+    }
+
+    public String toStringFitxer() {
+        return (super.getCodi() + ";" + super.getDataOferta() + ";" + super.getTipus() + ";" + super.getDataOferta() + ";" + fiOferiment);
     }
 
 }

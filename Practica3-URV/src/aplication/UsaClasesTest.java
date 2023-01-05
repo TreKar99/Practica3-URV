@@ -25,7 +25,7 @@ public class UsaClasesTest {
 		FileWriter fileProducte = new FileWriter("productesTest.txt", true);
 		BufferedWriter escriuProductes = new BufferedWriter(fileProducte);
 
-		Scanner fitxerPeticioIntercanvi = new Scanner(new File("intercanvisTest.txt"));
+		BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
 		FileWriter fileIntercanvi = new FileWriter("intercanvisTest.txt", true);
 		BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(fileIntercanvi);
 
@@ -34,7 +34,6 @@ public class UsaClasesTest {
 
 		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(100);
 		readData(llistaUsuaris);
-		
 
 		// Menú de consola
 		mostraMenu();
@@ -71,7 +70,7 @@ public class UsaClasesTest {
 					opcio10(llistaProductes);
 					break;
 				case 11:
-					opcio11(llistaProductes);
+					opcio11(llistaProductes, fitxerPeticioIntercanvi);
 					break;
 				case 12:
 					opcio12(llistaIntercanvis);
@@ -353,7 +352,6 @@ public class UsaClasesTest {
 
 		Usuari aux = new Usuari(alies, email, codipostal);
 		llistaUsuaris.afegirUsuari(aux);
-		//storeData(aux);
 	}
 
 	/**
@@ -375,19 +373,48 @@ public class UsaClasesTest {
 	/**
 	 * Métode que desactiva un servei sense esborrarlo de la llista
 	 */
-	public static void opcio11(LlistaProductes llista) {
-		// TODO crear una funcio que elimina un servei de la llista i mou la resta de
-		// productes de la llista de manera correcta
-		String codi;
-		int i;
+	public static void opcio11(LlistaProductes llista, BufferedReader llegeix) throws IOException {
+
+		BufferedReader file = new BufferedReader(new FileReader("productesTest.txt"));
+		StringBuffer inputBuffer = new StringBuffer();
+		String codi, frase, codiAux, inpString;
+		int i, puntComa;
+		boolean desactivat = false;
+
 		System.out.println("Introdueix el servei a desactivar");
 		codi = teclat.nextLine();
 		i = llista.buscarProducte(codi);
 		if (i != -1 && llista.getProducte(i).getTipus().equals("servei")) {
 			llista.getProducte(i).desactivar();
 			System.out.println("El servicio " + codi + " se ha desactivado");
-		} else
+			desactivat = true;
+		} else {
 			System.out.println("El servicio " + codi + " no se ha encontrado");
+		}
+
+		if (desactivat) {
+
+			do {
+				frase = file.readLine();
+				if (frase != null) {
+					puntComa = frase.indexOf(';', 0);
+					codiAux = frase.substring(0, puntComa);
+					if (codiAux.equals(codi)) {
+						inputBuffer.append(llista.getProducte(i).toStringFitxer() + "\n");
+					} else {
+						inputBuffer.append(frase + "\n");
+					}
+				}
+			} while (frase != null);
+
+			inpString = inputBuffer.toString();
+
+			FileOutputStream fileOut = new FileOutputStream("productesTest.txt");
+			fileOut.write(inpString.getBytes());
+			fileOut.close();
+
+		}
+		file.close();
 	}
 
 	/**
@@ -416,8 +443,6 @@ public class UsaClasesTest {
 	 * superiors a les indicades
 	 */
 	public static void opcio15(LlistaPeticionsIntercanvi intercanvis) {
-		// TODO crer un metode que mira la llista de usuaris i printeja el usuari amb
-		// valoracions superiors a la indicada per teclat
 		int llindar;
 		System.out.println("Introdueix el llindar");
 		do
@@ -431,8 +456,6 @@ public class UsaClasesTest {
 	 * de ells
 	 */
 	public static void opcio16(LlistaPeticionsIntercanvi intercanvis) {
-		// TODO crear un metode que mostri els serveis mes intercanviats i quantes
-		// vegades s'ha intercanviat
 		System.out.println("El servei mes intercanviat es: " + intercanvis.serveiMesIntercanviat());
 	}
 
@@ -445,8 +468,7 @@ public class UsaClasesTest {
 
 		String resposta;
 
-		do
-		{
+		do {
 			System.out.println("Vols guardar les dades introduides anteriorment? (y/n)");
 			resposta = teclat.nextLine();
 		} while (!(resposta.equalsIgnoreCase("y") || resposta.equalsIgnoreCase("n")));
@@ -539,15 +561,18 @@ public class UsaClasesTest {
 	 * @return LlistaPeticionsIntercanvi
 	 * @throws IOException
 	 */
-	public static LlistaPeticionsIntercanvi readIntercanvis(Scanner fitxerPeticioIntercanvi) throws IOException {
+	public static LlistaPeticionsIntercanvi readIntercanvis(BufferedReader fitxerPeticioIntercanvi) throws IOException {
 
 		LlistaPeticionsIntercanvi aux = new LlistaPeticionsIntercanvi(MAX);
 		String frase;
 
-		while (fitxerPeticioIntercanvi.hasNext()) {
-			frase = fitxerPeticioIntercanvi.nextLine();
+		frase = fitxerPeticioIntercanvi.readLine();
+		while (frase != null) {
+
 			aux.afegirPeticio(parseIntercanvis(frase));
+			frase = fitxerPeticioIntercanvi.readLine();
 		}
+
 		return (aux);
 	}
 
@@ -582,7 +607,7 @@ public class UsaClasesTest {
 	public static void readData(LlistaUsuaris list) {
 		ObjectInputStream inputFile;
 		Usuari[] aux = new Usuari[100];
-		
+
 		try {
 			inputFile = new ObjectInputStream(new FileInputStream("usuaris.txt"));
 			for (int i = 0; i < list.getLlista().length; i++) {

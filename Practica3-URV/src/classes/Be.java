@@ -64,4 +64,8 @@ public class Be extends Producte {
     public String toString() {
         return ("Es un be amb codi: " + super.getCodi() + ", descripcio: " + super.getDescripcio() + ", amplada: " + amplada + ", alcada: " + alcada + ", fondo:  " + fons + ", pes: " + pes + ", data intercanvi: " + dataIntercanvi);
     }
+
+    public String toStringFitxer() {
+        return ("Es un be amb codi: " + super.getCodi() + ", descripcio: " + super.getDescripcio() + ", amplada: " + amplada + ", alcada: " + alcada + ", fondo:  " + fons + ", pes: " + pes + ", data intercanvi: " + dataIntercanvi);
+    }
 }
