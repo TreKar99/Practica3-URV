@@ -1,8 +1,10 @@
 package lists;
 
+import java.io.Serializable;
+
 import classes.*;
 
-public class LlistaProductes {
+public class LlistaProductes implements Serializable{
     private Producte[] llista;
     private int numProductes, numBens, numServeis;
 
@@ -107,6 +109,18 @@ public class LlistaProductes {
     		i = -1;
     	
     	return i;
+    }
+
+    public boolean existeixProducte (String alies) {
+    	int i = 0;
+    	boolean existeix = false;
+    	while ((i < numProductes) && (!existeix)) {
+    		if (llista[i].getCodi().equals(alies)) {
+    			existeix = true;
+    		}
+    		i++;
+    	}
+    	return existeix;
     }
     
     

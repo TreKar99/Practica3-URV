@@ -1,8 +1,10 @@
 package lists;
 
+import java.io.Serializable;
+
 import classes.Usuari;
 
-public class LlistaUsuaris {
+public class LlistaUsuaris implements Serializable{
     private Usuari[] llista;
     private int numUsuaris;
 
@@ -11,6 +13,24 @@ public class LlistaUsuaris {
         llista = new Usuari[mida];
         this.numUsuaris = 0;
     }
+
+
+    public Usuari[] getLlista() {
+        return this.llista;
+    }
+
+    public void setLlista(Usuari[] llista) {
+        this.llista = llista;
+    }
+
+    public int getNumUsuaris() {
+        return this.numUsuaris;
+    }
+
+    public void setNumUsuaris(int numUsuaris) {
+        this.numUsuaris = numUsuaris;
+    }
+
 
     public void afegirUsuari(Usuari currUsuari) {
         if ( buscarUsuari(currUsuari.getAlies()) == -1) {
@@ -34,6 +54,20 @@ public class LlistaUsuaris {
     	
     	return i;
     }
+
+
+    public boolean usuariExisteix (String nomUsuari) {
+    	int i = 0;
+    	boolean trobat = false;
+    	while ((i < numUsuaris) && (!trobat)) {
+    		if (llista[i].getAlies().equals(nomUsuari)) {
+                 trobat = true;
+            }
+    		i++;
+    	}
+    	return trobat;
+    }
+
     public String toString() {
         String text = "";
 

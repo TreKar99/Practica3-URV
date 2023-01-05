@@ -1,8 +1,10 @@
 package lists;
 
+import java.io.Serializable;
+
 import classes.*;
 
-public class LlistaPeticionsIntercanvi {
+public class LlistaPeticionsIntercanvi{
 
 
     private PeticioIntercanvi[] llista;

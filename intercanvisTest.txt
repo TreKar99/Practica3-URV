@@ -7,3 +7,5 @@ INT005;Pirata1;Angela;Un paseo en barco;5 protogemas;true;3;2;true
 INT006;Pirata2;Philippe;Aventuras piratas;500 euros;true;1;1;false
 INT007;Pirata2;Angela;Aventuras piratas;20 protogemas;true;1;1;true
 INT007;Pirata2;German;Aventuras piratas;barca a pedales;true;1;1;false
+INT008;Pirata2;German;Aventuras piratas;barca a pedales;false;1;-1;false
+SERVEI-TEST-1;toni;carles;BE1;BE2;false;2;-1;false
