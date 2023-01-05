@@ -12,8 +12,12 @@ public class Usuari implements Serializable{
 
     private LlistaProductes productesUsuari;                    // Productes que ofereix l'usuari
     private LlistaPeticionsIntercanvi intercanvisUsuari;        // LLista per guardar intercanvis fets
-    //TODO Guardar els productes que ofereix i els intercanvis 
     
+
+    public Usuari(Usuari usuari) {
+        this(usuari.alies, usuari.email, usuari.codiPostal);
+    }
+
     public Usuari(String alies ) {
     	this.alies = alies;
     }
@@ -57,9 +61,7 @@ public class Usuari implements Serializable{
     }
     
     public Usuari copia() {
-    	Usuari aux = new Usuari(this.alies);
-    	aux.codiPostal = this.codiPostal;
-    	aux.email = this.email;
+    	Usuari aux = new Usuari(this.alies, this.email, this.codiPostal);
     	aux.intercanvisUsuari = this.intercanvisUsuari;
     	aux.productesUsuari = this.productesUsuari;
     	return (aux);

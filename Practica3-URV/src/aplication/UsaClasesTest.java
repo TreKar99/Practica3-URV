@@ -31,15 +31,17 @@ public class UsaClasesTest {
 
 		LlistaProductes llistaProductes = readProductes(fitxerProductes);
 		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
-		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(5);
+
+		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(100);
+		readData(llistaUsuaris);
+		
 
 		// Menú de consola
 		mostraMenu();
 		opcio = Integer.parseInt(teclat.nextLine());
-		while ((opcio < 17) && (opcio > 0)) {
+		while ((opcio < 18) && (opcio > 0)) {
 			switch (opcio) {
 				case 1:
-					//opcio1(fitxerProductes, fitxerPeticioIntercanvi, llistaProductes, llistaIntercanvis);
 					break;
 				case 2:
 					opcio2(llistaIntercanvis, llistaProductes, llistaUsuaris);
@@ -57,13 +59,13 @@ public class UsaClasesTest {
 					opcio6(llistaProductes, escriuProductes);
 					break;
 				case 7:
-					opcio7();
+					opcio7(llistaUsuaris, llistaIntercanvis, llistaProductes, escriuPeticionsIntercanvi);
 					break;
 				case 8:
 					opcio8(llistaIntercanvis);
 					break;
 				case 9:
-					opcio9();
+					opcio9(llistaUsuaris);
 					break;
 				case 10:
 					opcio10(llistaProductes);
@@ -87,8 +89,10 @@ public class UsaClasesTest {
 					opcio16(llistaIntercanvis);
 					break;
 				case 17:
-					opcio17(opcio);
 					escriuPeticionsIntercanvi.close();
+					opcio17(opcio, llistaUsuaris);
+					break;
+				case 18:
 					break;
 			}
 
@@ -97,8 +101,6 @@ public class UsaClasesTest {
 			System.out.println("Opció introduida");
 
 		}
-
-
 	}
 
 	/**
@@ -122,7 +124,8 @@ public class UsaClasesTest {
 		System.out.println("\t14. Peticions refusades");
 		System.out.println("\t15. Usuaris amb valoracio superior a 'x'");
 		System.out.println("\t16. Servei mes intercanviat");
-		System.out.println("\t17. Sortir");
+		System.out.println("\t17. Guardar dades");
+		System.out.println("\t18. Sortir");
 		System.out.print("\n\t\t\tIndica opcio:\n");
 	}
 
@@ -186,6 +189,7 @@ public class UsaClasesTest {
 
 	/**
 	 * Métode que afegeix una nova oferta de serveis
+	 * 
 	 * @throws IOException
 	 */
 	public static void opcio5(LlistaProductes p, BufferedWriter escriu) throws IOException {
@@ -222,7 +226,6 @@ public class UsaClasesTest {
 		String codiTeclat, descTeclat, dataOfertaTeclat;
 		float amplada, alcada, fons, pes;
 
-
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime now = LocalDateTime.now();
 
@@ -244,22 +247,64 @@ public class UsaClasesTest {
 		p.afegirProducte(aux);
 
 		escriu.newLine();
-		escriu.write(codiTeclat + ";" + descTeclat + ";be;" + dataOfertaTeclat + ";" + amplada + ";" + alcada + ";" + fons + ";" + pes);
+		escriu.write(codiTeclat + ";" + descTeclat + ";be;" + dataOfertaTeclat + ";" + amplada + ";" + alcada + ";"
+				+ fons + ";" + pes);
 		escriu.flush();
 
 	}
 
 	/**
 	 * Métode que afegeix una petició d'intercanvi
+	 * 
+	 * @throws IOException
 	 */
-	public static void opcio7() {
+	public static void opcio7(LlistaUsuaris llistaUsuaris, LlistaPeticionsIntercanvi llistaIntercanvis,
+			LlistaProductes llistaProductes, BufferedWriter escriu) throws IOException {
 		String codi, usuariEmisor, usuariRemitent, producteRebre, producteOferit;
-		boolean afirmativa, constestada;
-		int valoracioEmisor, valoracioRemitent;
+		boolean existeix;
+		int nota;
 
-		// TODO valoracio del que la crea
-		// TODO important saber identificar el usuari que esta creant la petició
-		// TODO la resta es anar copiant el que hi ha a afegir productes
+		System.out.println("Introdueix el codi de la peticio que vols crear");
+		codi = teclat.nextLine();
+
+		do {
+			System.out.println("Escriu l'usuari de l'emisor (alies)");
+			usuariEmisor = teclat.nextLine();
+			existeix = llistaUsuaris.usuariExisteix(usuariEmisor);
+		} while (!existeix);
+
+		do {
+			System.out.println("Escriu l'usuari del remitent (alies)");
+			usuariRemitent = teclat.nextLine();
+			existeix = llistaUsuaris.usuariExisteix(usuariRemitent);
+		} while (!existeix);
+
+		do {
+			System.out.println("Escriu el codi del producte que vols rebre");
+			producteRebre = teclat.nextLine();
+			existeix = llistaProductes.existeixProducte(producteRebre);
+		} while (!existeix);
+
+		do {
+			System.out.println("Escriu el codi del producte que ofeixies");
+			producteOferit = teclat.nextLine();
+			existeix = llistaProductes.existeixProducte(producteOferit);
+		} while (!existeix);
+
+		do {
+			System.out.println("Escriu la teva valoracio del producte que rebras (0-5)");
+			nota = Integer.parseInt(teclat.nextLine());
+		} while ((nota > 6) && (nota < 0));
+
+		PeticioIntercanvi aux = new PeticioIntercanvi(codi, usuariEmisor, usuariRemitent, producteRebre,
+				producteOferit);
+		llistaIntercanvis.afegirPeticio(aux);
+		aux.setValoracioEmisor(nota);
+
+		escriu.newLine();
+		escriu.write(codi + ";" + usuariEmisor + ";" + usuariRemitent + ";" + producteRebre + ";" + producteOferit
+				+ ";false;" + nota + ";-1;false");
+		escriu.flush();
 
 	}
 
@@ -292,8 +337,23 @@ public class UsaClasesTest {
 	/**
 	 * Métode que dona d'alta un usuari
 	 */
-	public static void opcio9() {
+	public static void opcio9(LlistaUsuaris llistaUsuaris) {
+		String alies, email;
+		int codipostal;
 
+		do {
+			System.out.println("Alies del teu usuari");
+			alies = teclat.nextLine();
+		} while (llistaUsuaris.usuariExisteix(alies));
+
+		System.out.println("Escriu el teu email");
+		email = teclat.nextLine();
+		System.out.println("Escriu el teu codi postal");
+		codipostal = Integer.parseInt(teclat.nextLine());
+
+		Usuari aux = new Usuari(alies, email, codipostal);
+		llistaUsuaris.afegirUsuari(aux);
+		//storeData(aux);
 	}
 
 	/**
@@ -301,7 +361,8 @@ public class UsaClasesTest {
 	 * l'elimina de la llista
 	 */
 	public static void opcio10(LlistaProductes llista) {
-		//TODO crear una funcio que elimina un be de la llista i mou la resta de productes de la llista de manera correcta
+		// TODO crear una funcio que elimina un be de la llista i mou la resta de
+		// productes de la llista de manera correcta
 		String codi;
 		System.out.println("Introdueix el be a eliminar");
 		codi = teclat.nextLine();
@@ -315,7 +376,8 @@ public class UsaClasesTest {
 	 * Métode que desactiva un servei sense esborrarlo de la llista
 	 */
 	public static void opcio11(LlistaProductes llista) {
-		//TODO crear una funcio que elimina un servei de la llista i mou la resta de productes de la llista de manera correcta
+		// TODO crear una funcio que elimina un servei de la llista i mou la resta de
+		// productes de la llista de manera correcta
 		String codi;
 		int i;
 		System.out.println("Introdueix el servei a desactivar");
@@ -324,8 +386,7 @@ public class UsaClasesTest {
 		if (i != -1 && llista.getProducte(i).getTipus().equals("servei")) {
 			llista.getProducte(i).desactivar();
 			System.out.println("El servicio " + codi + " se ha desactivado");
-		}
-		else
+		} else
 			System.out.println("El servicio " + codi + " no se ha encontrado");
 	}
 
@@ -355,32 +416,44 @@ public class UsaClasesTest {
 	 * superiors a les indicades
 	 */
 	public static void opcio15(LlistaPeticionsIntercanvi intercanvis) {
-		//TODO crer un metode que mira la llista de usuaris i printeja el usuari amb valoracions superiors a la indicada per teclat
+		// TODO crer un metode que mira la llista de usuaris i printeja el usuari amb
+		// valoracions superiors a la indicada per teclat
 		int llindar;
 		System.out.println("Introdueix el llindar");
 		do
 			llindar = Integer.parseInt(teclat.nextLine());
 		while (llindar < 0 || llindar > 5);
 		System.out.println("Los usuarios son: " + intercanvis.usuarisLlindar(llindar));
-		}
+	}
 
 	/**
 	 * Métode que mostra el servei amb mes intercanvis i el núm
 	 * de ells
 	 */
 	public static void opcio16(LlistaPeticionsIntercanvi intercanvis) {
-		// TODO crear un metode que mostri els serveis mes intercanviats i quantes vegades s'ha intercanviat
+		// TODO crear un metode que mostri els serveis mes intercanviats i quantes
+		// vegades s'ha intercanviat
 		System.out.println("El servei mes intercanviat es: " + intercanvis.serveiMesIntercanviat());
 	}
 
 	/**
-	 * Métode que surt de l'aplicació i pregunta a l'usuari si vol
+	 * Métode que pregunta a l'usuari si vol
 	 * escriure les noves dades introduides o deixar el fitxer com
 	 * estava
 	 */
-	public static int opcio17(int opcio) {
+	public static void opcio17(int opcio, LlistaUsuaris usuaris) {
 
-		return (opcio++);
+		String resposta;
+
+		do
+		{
+			System.out.println("Vols guardar les dades introduides anteriorment? (y/n)");
+			resposta = teclat.nextLine();
+		} while (!(resposta.equalsIgnoreCase("y") || resposta.equalsIgnoreCase("n")));
+
+		if (resposta.equalsIgnoreCase("y")) {
+			storeData(usuaris);
+		}
 	}
 
 	/**
@@ -433,7 +506,6 @@ public class UsaClasesTest {
 			alcada = Float.parseFloat(atributtes.next());
 			fons = Float.parseFloat(atributtes.next());
 			pes = Float.parseFloat(atributtes.next());
-			
 
 			if (atributtes.hasNext()) {
 				dataIntercanvi = atributtes.next();
@@ -443,7 +515,7 @@ public class UsaClasesTest {
 				Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes);
 				p = aux.copia();
 			}
-			
+
 		} else if (tipus.toLowerCase().equals("servei")) {
 
 			fiOferiment = atributtes.next();
@@ -505,5 +577,42 @@ public class UsaClasesTest {
 		atributtes.close();
 
 		return (aux);
+	}
+
+	public static void readData(LlistaUsuaris list) {
+		ObjectInputStream inputFile;
+		Usuari[] aux = new Usuari[100];
+		
+		try {
+			inputFile = new ObjectInputStream(new FileInputStream("usuaris.txt"));
+			for (int i = 0; i < list.getLlista().length; i++) {
+				aux[i] = ((Usuari) inputFile.readObject());
+				if (aux[i] != null) {
+					list.afegirUsuari(aux[i].copia());
+				}
+			}
+			inputFile.close();
+		} catch (IOException e) {
+			System.out.println("Error en l'arxiu d'entrada. " + e);
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error, no es troba la classe Vehicle." + e);
+		} catch (ClassCastException e) {
+			System.out.println(
+					"Error, el format de l'arxiu no és correcte per la definició actual de la classe Vehicle." + e);
+		}
+	}
+
+	public static void storeData(LlistaUsuaris aux) {
+		ObjectOutputStream outputFile;
+		Usuari[] llista = aux.getLlista();
+		try {
+			outputFile = new ObjectOutputStream(new FileOutputStream("usuaris.txt"));
+			for (int i = 0; i < llista.length; i++) {
+				outputFile.writeObject(llista[i]);
+			}
+			outputFile.close();
+		} catch (IOException e) {
+			System.out.println("Error en l'arxiu de sortida." + e);
+		}
 	}
 }

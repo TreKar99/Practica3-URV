@@ -1,6 +1,8 @@
 package classes;
 
-public abstract class Producte {
+import java.io.Serializable;
+
+public abstract class Producte implements Serializable{
     
     private String codi, descripcio, tipus, dataOferta;
     private Usuari usuari;
