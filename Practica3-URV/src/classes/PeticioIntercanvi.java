@@ -138,6 +138,14 @@ public class PeticioIntercanvi {
         return (aux);
     }
 
+    public String toStringAceptada() {
+        return (codi + ";" + usuariEmisor + ";" + usuariRemitent + ";" + producteOferit + ";" + producteRebre + ";true;" + valoracioEmisor + ";" + valoracioRemitent + ";true");
+    }
+
+    public String toStringRefusada() {
+        return (codi + ";" + usuariEmisor + ";" + usuariRemitent + ";" + producteOferit + ";" + producteRebre + ";true;" + valoracioEmisor + ";" + valoracioRemitent + ";false");
+    }
+
     public String toString() {
         return ("La peticio: " + codi + " emesa per l'usuari: " + usuariEmisor + " rebra el producte " + producteRebre + " i oferira el producte " + producteOferit + " al usuari " + usuariRemitent + ". Aquesta peticio es " + afirmativa + " i te com a valoracions " + valoracioEmisor + " (emisor) " + valoracioRemitent + " (remitent). Contestada: " + contestada);
     }

@@ -69,7 +69,7 @@ public class Servei extends Producte {
     }
 
     public String toStringFitxer() {
-        return (super.getCodi() + ";" + super.getDataOferta() + ";" + super.getTipus() + ";" + super.getDataOferta() + ";" + fiOferiment);
+        return (super.getCodi() + ";" + super.getDescripcio() + ";" + super.getTipus() + ";" + super.getDataOferta() + ";" + fiOferiment);
     }
 
 }

@@ -26,11 +26,12 @@ public class LlistaPeticionsIntercanvi{
      * Métode que accepta un intercanvi
      * @param codiIntercanvi
      */
-    public void acceptaIntercanvi(String codiIntercanvi) {
+    public void acceptaIntercanvi(String codiIntercanvi, int valoracio) {
         int posIntercanvi = this.existeixCodiIntercanvi(codiIntercanvi);
         if (posIntercanvi  != -1) {
             llista[posIntercanvi].setAfirmativa(true);
             llista[posIntercanvi].setContestada(true);
+            llista[posIntercanvi].setValoracioRemitent(valoracio);
         }
     }
 
@@ -56,7 +57,7 @@ public class LlistaPeticionsIntercanvi{
         int posIntercanvi = -1;
         boolean existeix = false;
         while ((i < numPeticions) && (!existeix)) {
-            if (llista[i].getCodi() == (codiIntercanvi)) {
+            if (llista[i].getCodi().equals(codiIntercanvi)) {
                 existeix = true;
                 posIntercanvi = i;
             }

@@ -70,7 +70,7 @@ public class UsaClasesTest {
 					opcio10(llistaProductes);
 					break;
 				case 11:
-					opcio11(llistaProductes, fitxerPeticioIntercanvi);
+					opcio11(llistaProductes);
 					break;
 				case 12:
 					opcio12(llistaIntercanvis);
@@ -310,27 +310,59 @@ public class UsaClasesTest {
 	/**
 	 * Métode que accepta o refusa una petició d'intercanvi
 	 */
-	public static void opcio8(LlistaPeticionsIntercanvi intercanvis) {
-		String codiIntercanvi;
+	public static void opcio8(LlistaPeticionsIntercanvi intercanvis) throws IOException {
 
-		System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
-		codiIntercanvi = teclat.nextLine();
-		while (intercanvis.existeixCodiIntercanvi(codiIntercanvi) == -1) {
-			System.out.println("Aquesta petició no existeix");
+		// BufferedReader file = new BufferedReader(new
+		// FileReader("intercanvisTest.txt"));
+		Scanner file = new Scanner(new File("intercanvisTest.txt"));
+		StringBuffer inputBuffer = new StringBuffer();
+		String codiIntercanvi, frase, codiAux, inpString;
+		int nota = -1, posaux = -1, puntComa;
+		boolean accepta = false;
+
+		do {
 			System.out.println("Introdueix el codi de la peticio que vols aceptar o refusar");
 			codiIntercanvi = teclat.nextLine();
-		}
+			posaux = intercanvis.existeixCodiIntercanvi(codiIntercanvi);
+		} while (posaux == -1);
 
-		System.out.println("Vols acceptar o refusar aquesta peticio? (Y/n)");
-		if (teclat.nextLine().toLowerCase().equals("y")) {
-			intercanvis.acceptaIntercanvi(codiIntercanvi);
-		} else if (teclat.nextLine().toLowerCase().equals("n")) {
+		System.out.println("Vols acceptar o refusar aquesta peticio? (Y/N)");
+		if (teclat.nextLine().equalsIgnoreCase("y")) {
+			do {
+				System.out.println("Quina es la teva valoració del producte que has rebut? (0-5)");
+				nota = Integer.parseInt(teclat.nextLine());
+			} while ((nota > 6) && (nota < 0));
+			accepta = true;
+			intercanvis.acceptaIntercanvi(codiIntercanvi, nota);
+
+		} else if (teclat.nextLine().equalsIgnoreCase("n")) {
 			intercanvis.refusaIntercanvi(codiIntercanvi);
 		}
 
-		// TODO Si s'ha acceptat s'ha de donar una valoració del que ha acceptat
+		while (file.hasNextLine()) {
+			frase = file.nextLine();
+			puntComa = frase.indexOf(';', 0);
+			codiAux = frase.substring(0, puntComa);
+			if (codiAux.equals(codiIntercanvi)) {
+				if (accepta) {
+					inputBuffer.append(intercanvis.getLlista()[posaux].toStringAceptada());
+				} else {
+					inputBuffer.append(intercanvis.getLlista()[posaux].toStringRefusada());
+				}
+			} else {
+				inputBuffer.append(frase);
+			}
+			if (file.hasNextLine())
+				inputBuffer.append("\n");
+		}
 
-		System.out.println("Acció realitzada!");
+		inpString = inputBuffer.toString();
+
+		FileOutputStream fileOut = new FileOutputStream("intercanvisTest.txt");
+		fileOut.write(inpString.getBytes());
+		fileOut.close();
+		file.close();
+
 	}
 
 	/**
@@ -358,24 +390,52 @@ public class UsaClasesTest {
 	 * Métode que dona de baixa un bé o producte fisic i
 	 * l'elimina de la llista
 	 */
-	public static void opcio10(LlistaProductes llista) {
-		// TODO crear una funcio que elimina un be de la llista i mou la resta de
-		// productes de la llista de manera correcta
-		String codi;
+	public static void opcio10(LlistaProductes llista) throws IOException {
+
+		Scanner file = new Scanner(new File("productesTest.txt"));
+		StringBuffer inputBuffer = new StringBuffer();
+		String codi, frase, codiAux, inpString;
+		int puntComa;
+		boolean desactivat = false;
 		System.out.println("Introdueix el be a eliminar");
 		codi = teclat.nextLine();
-		if (llista.eliminarProducte(codi))
+		if (llista.eliminarProducte(codi)) {
 			System.out.println("Producte eliminat");
-		else
+			desactivat = true;
+		} else {
 			System.out.println("Producte no eliminat");
+		}
+		if (desactivat) {
+
+			while (file.hasNextLine()) {
+				frase = file.nextLine();
+				puntComa = frase.indexOf(';', 0);
+				codiAux = frase.substring(0, puntComa);
+				if (!codiAux.equals(codi)) {
+					inputBuffer.append(frase);
+				} else {
+					inputBuffer.append(frase + ";ELIMINAT");
+				}
+				if (file.hasNextLine())
+					inputBuffer.append("\n");
+			}
+
+			inpString = inputBuffer.toString();
+
+			FileOutputStream fileOut = new FileOutputStream("productesTest.txt");
+			fileOut.write(inpString.getBytes());
+			fileOut.close();
+
+		}
+		file.close();
 	}
 
 	/**
 	 * Métode que desactiva un servei sense esborrarlo de la llista
 	 */
-	public static void opcio11(LlistaProductes llista, BufferedReader llegeix) throws IOException {
+	public static void opcio11(LlistaProductes llista) throws IOException {
 
-		BufferedReader file = new BufferedReader(new FileReader("productesTest.txt"));
+		Scanner file = new Scanner(new File("productesTest.txt"));
 		StringBuffer inputBuffer = new StringBuffer();
 		String codi, frase, codiAux, inpString;
 		int i, puntComa;
@@ -394,18 +454,18 @@ public class UsaClasesTest {
 
 		if (desactivat) {
 
-			do {
-				frase = file.readLine();
-				if (frase != null) {
-					puntComa = frase.indexOf(';', 0);
-					codiAux = frase.substring(0, puntComa);
-					if (codiAux.equals(codi)) {
-						inputBuffer.append(llista.getProducte(i).toStringFitxer() + "\n");
-					} else {
-						inputBuffer.append(frase + "\n");
-					}
+			while (file.hasNextLine()) {
+				frase = file.nextLine();
+				puntComa = frase.indexOf(';', 0);
+				codiAux = frase.substring(0, puntComa);
+				if (codiAux.equals(codi)) {
+					inputBuffer.append(llista.getProducte(i).toStringFitxer());
+				} else {
+					inputBuffer.append(frase);
 				}
-			} while (frase != null);
+				if (file.hasNextLine())
+					inputBuffer.append("\n");
+			}
 
 			inpString = inputBuffer.toString();
 
@@ -493,13 +553,12 @@ public class UsaClasesTest {
 
 		frase = fitxerProductes.readLine();
 		while (frase != null) {
-
-			aux.afegirProducte(parseProductes(frase));
+			if (parseProductes(frase) != null) {
+				aux.afegirProducte(parseProductes(frase));
+			}
 			frase = fitxerProductes.readLine();
 		}
-
 		return (aux);
-
 	}
 
 	/**
@@ -531,8 +590,12 @@ public class UsaClasesTest {
 
 			if (atributtes.hasNext()) {
 				dataIntercanvi = atributtes.next();
-				Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes, dataIntercanvi);
-				p = aux.copia();
+				if (!atributtes.hasNext() && !dataIntercanvi.equals("ELIMINAT")) {
+					Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes, dataIntercanvi);
+					p = aux.copia();
+				} else {
+					p = null;
+				}
 			} else {
 				Be aux = new Be(codi, descripcio, tipus, dataOferta, amplada, alcada, fons, pes);
 				p = aux.copia();
