@@ -3,7 +3,7 @@ codi2;descripcio;servei;dataoferta;16/12/2025
 Leche;leche fresca;be;10/10/2022;12;15;10;1;10/10/2025
 Platano;platano de canarias;be;12/12/1212;50;10;10;1;10/10/2025
 Viaje;Viaje a Oslo;servei;01/01/2000;01/01/2023
-SERVEI1;SERVEI1;servei;24/12/2022;14/07/2003
+SERVEI1;24/12/2022;servei;24/12/2022;5/1/2023
 BE1;BE1;be;24/12/2022;1.0;1.0;1.0;1.0
 SERVEI2;SERVEI2;servei;24/12/2022;01/01/2000
 SERVEI3;SERVEI3;servei;24/12/2022;10/10/2020

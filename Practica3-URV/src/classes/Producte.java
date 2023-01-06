@@ -66,4 +66,6 @@ public abstract class Producte implements Serializable{
     public abstract void desactivar();
     public abstract Producte copia();
     public abstract String toString();
+    public abstract String toStringFitxer();
+    
 }
