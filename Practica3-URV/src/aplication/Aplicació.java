@@ -1,25 +1,59 @@
-// TOWI BRANCH COMMIT
-
 package aplication;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 import classes.*;
 import lists.LlistaPeticionsIntercanvi;
 import lists.LlistaProductes;
 import lists.LlistaUsuaris;
+import gui.*;
 
-public class UsaClasesTest {
+public class Aplicació extends JFrame{
+
+	private static final long serialVersionUID = 1L;
+	private JPanel botons = new JPanel();
+	private JButton b1 = new JButton("Boto1");
+	private JButton b2 = new JButton("Boto2");
+	private JButton b3 = new JButton("Boto3");
+	private JButton b4 = new JButton("Boto4");
+
+	public Aplicació(String titol) {
+		super(titol);
+		this.setLocation(400, 200);
+		this.setSize(400, 200);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+
+		this.setLayout(new BorderLayout());
+
+		// Afegim els botons al panell
+		botons.setLayout(new FlowLayout());
+		botons.add(b1); botons.add(b2); botons.add(b3); botons.add(b4);
+		this.add(botons, BorderLayout.NORTH);
+		setVisible(true);
+	}
+
+	public void addListeners(LlistaPeticionsIntercanvi inter, LlistaUsuaris usuaris, int ind) {
+		AccionBoton1 ac1 = new AccionBoton1(this, inter);
+		b1.addActionListener(ac1);
+		AccionBoton2 ac2 = new AccionBoton2(this, usuaris, inter, ind);
+		b2.addActionListener(ac2);
+		AccionBoton3 ac3 = new AccionBoton3(this, usuaris, ind);
+		b3.addActionListener(ac3);
+		AccionBoton4 ac4 = new AccionBoton4(this, usuaris, ind);
+		b4.addActionListener(ac4);
+
+	}
 
 	static final int MAX = 5000;
 	static Scanner teclat = new Scanner(System.in);
-
-	public static void main(String[] args) throws IOException {
-
-		int opcio;
+	
+	public static void main(String[] args) throws IOException, InterruptedException {
 		// Lectura dels fitxers de productes i intercanvis
 		BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
 		FileWriter fileProducte = new FileWriter("productesTest.txt", true);
@@ -34,10 +68,22 @@ public class UsaClasesTest {
 
 		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(100);
 		readData(llistaUsuaris);
+		
+		// Per accedir a qualsevol de les funcionalitats l’usuari ha d’indicar el seu codi	
+		String nom = JOptionPane.showInputDialog("Indica el teu codi d'usuari per accedir");
+		while (nom == null || nom.equals("") || (llistaUsuaris.buscarUsuari(nom) == -1)) {
+			// Missatge d'error.
+			JOptionPane.showMessageDialog(null, "Usuari no trobat!", "ERROR", JOptionPane.ERROR_MESSAGE);
+			nom = JOptionPane.showInputDialog("Indica el nom del usuari ");
+		}
+		
+		int indUsuari = llistaUsuaris.buscarUsuari(nom);
+		Aplicació p = new Aplicació("Xarxa d'intercanvis"); 		
+		p.addListeners(llistaIntercanvis, llistaUsuaris, indUsuari);
 
 		// Menú de consola
 		mostraMenu();
-		opcio = Integer.parseInt(teclat.nextLine());
+		int opcio = Integer.parseInt(teclat.nextLine());
 		while ((opcio < 18) && (opcio > 0)) {
 			switch (opcio) {
 				case 1:
@@ -107,7 +153,7 @@ public class UsaClasesTest {
 	 */
 	public static void mostraMenu() {
 		System.out.println("\n\nOpcions del menu:");
-		System.out.println("\n\t1. Carregar fitxers");
+		//System.out.println("\n\t1. Carregar fitxers");
 		System.out.println("\t2. Llistar dades de llistes");
 		System.out.println("\t3. Llistar ofertes de serveis actives");
 		System.out.println("\t4. Llistar bens o productes fisics disponibles");
