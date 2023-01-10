@@ -721,10 +721,6 @@ public class Aplicació extends JFrame {
 		return (aux);
 	}
 
-	/**
-	 * Mètode que llegeix els usuaris
-	 * @param list
-	 */
 	public static void readData(LlistaUsuaris list) {
 		ObjectInputStream inputFile;
 		Usuari[] aux = new Usuari[100];
@@ -748,10 +744,6 @@ public class Aplicació extends JFrame {
 		}
 	}
 
-	/**
-	 * Mètode que guarda els usuaris
-	 * @param aux
-	 */
 	public static void storeData(LlistaUsuaris aux) {
 		ObjectOutputStream outputFile;
 		Usuari[] llista = aux.getLlista();
