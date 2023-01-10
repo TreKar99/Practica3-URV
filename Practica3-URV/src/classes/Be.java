@@ -48,10 +48,17 @@ public class Be extends Producte {
         }
     }
     
+    /**
+     * Mètode que desactiva el intercanvi
+     */
     public void desactivar() {
     	dataIntercanvi = "-1";
     }
 
+    /**
+     * Mètode que retrona una copia del Be
+     * @return aux
+     */
     public Be copia() {
 
         Be b = new Be(super.getCodi(), super.getDescripcio(), super.getTipus(), super.getDataOferta(), amplada, alcada,

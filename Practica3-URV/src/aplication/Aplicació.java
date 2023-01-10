@@ -165,7 +165,6 @@ public class Aplicació extends JFrame {
 	 */
 	public static void mostraMenu() {
 		System.out.println("\n\nOpcions del menu:");
-		// System.out.println("\n\t1. Carregar fitxers");
 		System.out.println("\t2. Llistar dades de llistes");
 		System.out.println("\t3. Llistar ofertes de serveis actives");
 		System.out.println("\t4. Llistar bens o productes fisics disponibles");
@@ -184,16 +183,6 @@ public class Aplicació extends JFrame {
 		System.out.println("\t17. Guardar dades");
 		System.out.println("\t18. Sortir");
 		System.out.print("\n\t\t\tIndica opcio:\n");
-	}
-
-	/**
-	 * Métode que carrega fitxers
-	 */
-	public static void opcio1(Scanner fitxerProductes, Scanner fitxerIntercanvis, LlistaProductes productes,
-			LlistaPeticionsIntercanvi intercanvis) {
-
-		// productes = readProductes(fitxerProductes);
-		// intercanvis = readIntercanvis(fitxerIntercanvis);
 	}
 
 	/**
@@ -732,6 +721,10 @@ public class Aplicació extends JFrame {
 		return (aux);
 	}
 
+	/**
+	 * Mètode que llegeix els usuaris
+	 * @param list
+	 */
 	public static void readData(LlistaUsuaris list) {
 		ObjectInputStream inputFile;
 		Usuari[] aux = new Usuari[100];
@@ -755,6 +748,10 @@ public class Aplicació extends JFrame {
 		}
 	}
 
+	/**
+	 * Mètode que guarda els usuaris
+	 * @param aux
+	 */
 	public static void storeData(LlistaUsuaris aux) {
 		ObjectOutputStream outputFile;
 		Usuari[] llista = aux.getLlista();
@@ -769,6 +766,10 @@ public class Aplicació extends JFrame {
 		}
 	}
 
+	/**
+	 * Mètode que copia les dades de intercanvis i productes a un fitxer nou
+	 * @throws IOException
+	 */
 	public static void copiaDades() throws IOException {
 
 		Scanner fileIntercanvis = new Scanner(new File("intercanvisTest.txt"));
@@ -809,6 +810,10 @@ public class Aplicació extends JFrame {
 		fileProductes.close();
 	}
 
+	/**
+	 * Mètode que restaura les dades al punt inicial de executar el programa
+	 * @throws IOException
+	 */
 	public static void restauraDades() throws IOException {
 
 		Scanner fileIntercanvis = new Scanner(new File("intercanvisCopia.txt"));
