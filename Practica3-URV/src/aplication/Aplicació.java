@@ -13,7 +13,7 @@ import lists.LlistaProductes;
 import lists.LlistaUsuaris;
 import gui.*;
 
-public class Aplicació extends JFrame{
+public class Aplicació extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel botons = new JPanel();
@@ -33,7 +33,10 @@ public class Aplicació extends JFrame{
 
 		// Afegim els botons al panell
 		botons.setLayout(new FlowLayout());
-		botons.add(b1); botons.add(b2); botons.add(b3); botons.add(b4);
+		botons.add(b1);
+		botons.add(b2);
+		botons.add(b3);
+		botons.add(b4);
 		this.add(botons, BorderLayout.NORTH);
 		setVisible(true);
 	}
@@ -52,99 +55,108 @@ public class Aplicació extends JFrame{
 
 	static final int MAX = 5000;
 	static Scanner teclat = new Scanner(System.in);
-	
+
 	public static void main(String[] args) throws IOException, InterruptedException {
+
 		// Lectura dels fitxers de productes i intercanvis
-		BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
-		FileWriter fileProducte = new FileWriter("productesTest.txt", true);
-		BufferedWriter escriuProductes = new BufferedWriter(fileProducte);
+		System.out.println("Desitja carregar les dades dels fitxers?(y/n)");
+		if (teclat.nextLine().equalsIgnoreCase("y")) {
 
-		BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
-		FileWriter fileIntercanvi = new FileWriter("intercanvisTest.txt", true);
-		BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(fileIntercanvi);
+			BufferedReader fitxerProductes = new BufferedReader(new FileReader("productesTest.txt"));
+			FileWriter fileProducte = new FileWriter("productesTest.txt", true);
+			BufferedWriter escriuProductes = new BufferedWriter(fileProducte);
 
-		LlistaProductes llistaProductes = readProductes(fitxerProductes);
-		LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
+			BufferedReader fitxerPeticioIntercanvi = new BufferedReader(new FileReader("intercanvisTest.txt"));
+			FileWriter fileIntercanvi = new FileWriter("intercanvisTest.txt", true);
+			BufferedWriter escriuPeticionsIntercanvi = new BufferedWriter(fileIntercanvi);
 
-		LlistaUsuaris llistaUsuaris = new LlistaUsuaris(100);
-		readData(llistaUsuaris);
-		
-		// Per accedir a qualsevol de les funcionalitats l’usuari ha d’indicar el seu codi	
-		String nom = JOptionPane.showInputDialog("Indica el teu codi d'usuari per accedir");
-		while (nom == null || nom.equals("") || (llistaUsuaris.buscarUsuari(nom) == -1)) {
-			// Missatge d'error.
-			JOptionPane.showMessageDialog(null, "Usuari no trobat!", "ERROR", JOptionPane.ERROR_MESSAGE);
-			nom = JOptionPane.showInputDialog("Indica el nom del usuari ");
-		}
-		
-		int indUsuari = llistaUsuaris.buscarUsuari(nom);
-		Aplicació p = new Aplicació("Xarxa d'intercanvis"); 		
-		p.addListeners(llistaIntercanvis, llistaUsuaris, indUsuari);
+			copiaDades();
 
-		// Menú de consola
-		mostraMenu();
-		int opcio = Integer.parseInt(teclat.nextLine());
-		while ((opcio < 18) && (opcio > 0)) {
-			switch (opcio) {
-				case 1:
-					break;
-				case 2:
-					opcio2(llistaIntercanvis, llistaProductes, llistaUsuaris);
-					break;
-				case 3:
-					opcio3(llistaProductes);
-					break;
-				case 4:
-					opcio4(llistaProductes);
-					break;
-				case 5:
-					opcio5(llistaProductes, escriuProductes);
-					break;
-				case 6:
-					opcio6(llistaProductes, escriuProductes);
-					break;
-				case 7:
-					opcio7(llistaUsuaris, llistaIntercanvis, llistaProductes, escriuPeticionsIntercanvi);
-					break;
-				case 8:
-					opcio8(llistaIntercanvis);
-					break;
-				case 9:
-					opcio9(llistaUsuaris);
-					break;
-				case 10:
-					opcio10(llistaProductes);
-					break;
-				case 11:
-					opcio11(llistaProductes);
-					break;
-				case 12:
-					opcio12(llistaIntercanvis);
-					break;
-				case 13:
-					opcio13(llistaIntercanvis);
-					break;
-				case 14:
-					opcio14(llistaIntercanvis);
-					break;
-				case 15:
-					opcio15(llistaIntercanvis);
-					break;
-				case 16:
-					opcio16(llistaIntercanvis);
-					break;
-				case 17:
-					escriuPeticionsIntercanvi.close();
-					opcio17(opcio, llistaUsuaris);
-					break;
-				case 18:
-					break;
+			LlistaProductes llistaProductes = readProductes(fitxerProductes);
+			LlistaPeticionsIntercanvi llistaIntercanvis = readIntercanvis(fitxerPeticioIntercanvi);
+
+			LlistaUsuaris llistaUsuaris = new LlistaUsuaris(100);
+			readData(llistaUsuaris);
+
+			// Per accedir a qualsevol de les funcionalitats l’usuari ha d’indicar el seu
+			// codi
+			String nom = JOptionPane.showInputDialog("Indica el teu codi d'usuari per accedir");
+			while (nom == null || nom.equals("") || (llistaUsuaris.buscarUsuari(nom) == -1)) {
+				// Missatge d'error.
+				JOptionPane.showMessageDialog(null, "Usuari no trobat!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				nom = JOptionPane.showInputDialog("Indica el nom del usuari ");
 			}
 
-			mostraMenu();
-			opcio = Integer.parseInt(teclat.nextLine());
-			System.out.println("Opció introduida");
+			int indUsuari = llistaUsuaris.buscarUsuari(nom);
+			Aplicació p = new Aplicació("Xarxa d'intercanvis");
+			p.addListeners(llistaIntercanvis, llistaUsuaris, indUsuari);
 
+			// Menú de consola
+			mostraMenu();
+			int opcio = Integer.parseInt(teclat.nextLine());
+			while ((opcio < 18) && (opcio > 0)) {
+				switch (opcio) {
+					case 1:
+						break;
+					case 2:
+						opcio2(llistaIntercanvis, llistaProductes, llistaUsuaris);
+						break;
+					case 3:
+						opcio3(llistaProductes);
+						break;
+					case 4:
+						opcio4(llistaProductes);
+						break;
+					case 5:
+						opcio5(llistaProductes, escriuProductes);
+						break;
+					case 6:
+						opcio6(llistaProductes, escriuProductes);
+						break;
+					case 7:
+						opcio7(llistaUsuaris, llistaIntercanvis, llistaProductes, escriuPeticionsIntercanvi);
+						break;
+					case 8:
+						opcio8(llistaIntercanvis);
+						break;
+					case 9:
+						opcio9(llistaUsuaris);
+						break;
+					case 10:
+						opcio10(llistaProductes);
+						break;
+					case 11:
+						opcio11(llistaProductes);
+						break;
+					case 12:
+						opcio12(llistaIntercanvis);
+						break;
+					case 13:
+						opcio13(llistaIntercanvis);
+						break;
+					case 14:
+						opcio14(llistaIntercanvis);
+						break;
+					case 15:
+						opcio15(llistaIntercanvis);
+						break;
+					case 16:
+						opcio16(llistaIntercanvis);
+						break;
+					case 17:
+						escriuPeticionsIntercanvi.close();
+						opcio17(opcio, llistaUsuaris);
+						break;
+					case 18:
+						break;
+				}
+
+				mostraMenu();
+				opcio = Integer.parseInt(teclat.nextLine());
+				System.out.println("Opció introduida");
+			}
+		} else {
+			System.out.println("Fins la proxima");
 		}
 	}
 
@@ -153,7 +165,7 @@ public class Aplicació extends JFrame{
 	 */
 	public static void mostraMenu() {
 		System.out.println("\n\nOpcions del menu:");
-		//System.out.println("\n\t1. Carregar fitxers");
+		// System.out.println("\n\t1. Carregar fitxers");
 		System.out.println("\t2. Llistar dades de llistes");
 		System.out.println("\t3. Llistar ofertes de serveis actives");
 		System.out.println("\t4. Llistar bens o productes fisics disponibles");
@@ -581,6 +593,13 @@ public class Aplicació extends JFrame{
 
 		if (resposta.equalsIgnoreCase("y")) {
 			storeData(usuaris);
+		} else {
+			try {
+				restauraDades();
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+
 		}
 	}
 
@@ -749,4 +768,84 @@ public class Aplicació extends JFrame{
 			System.out.println("Error en l'arxiu de sortida." + e);
 		}
 	}
+
+	public static void copiaDades() throws IOException {
+
+		Scanner fileIntercanvis = new Scanner(new File("intercanvisTest.txt"));
+		Scanner fileProductes = new Scanner(new File("productesTest.txt"));
+		StringBuffer inputBufferIntercanvis = new StringBuffer();
+		StringBuffer inputBufferProductes = new StringBuffer();
+		String frase = "", inpString;
+
+		while (fileIntercanvis.hasNextLine()) {
+			frase = fileIntercanvis.nextLine();
+			inputBufferIntercanvis.append(frase);
+			if (fileIntercanvis.hasNextLine())
+				inputBufferIntercanvis.append("\n");
+		}
+
+		inpString = inputBufferIntercanvis.toString();
+
+		FileOutputStream fileOutInt = new FileOutputStream("intercanvisCopia.txt");
+		fileOutInt.write(inpString.getBytes());
+		fileOutInt.close();
+		fileIntercanvis.close();
+
+		frase = "";
+		inpString = "";
+
+		while (fileProductes.hasNextLine()) {
+			frase = fileProductes.nextLine();
+			inputBufferProductes.append(frase);
+			if (fileProductes.hasNextLine())
+				inputBufferProductes.append("\n");
+		}
+
+		inpString = inputBufferProductes.toString();
+
+		FileOutputStream fileOutProds = new FileOutputStream("productesCopia.txt");
+		fileOutProds.write(inpString.getBytes());
+		fileOutProds.close();
+		fileProductes.close();
+	}
+
+	public static void restauraDades() throws IOException {
+
+		Scanner fileIntercanvis = new Scanner(new File("intercanvisCopia.txt"));
+		Scanner fileProductes = new Scanner(new File("productesCopia.txt"));
+		StringBuffer inputBufferIntercanvis = new StringBuffer();
+		StringBuffer inputBufferProductes = new StringBuffer();
+		String frase = "", inpString;
+
+		while (fileIntercanvis.hasNextLine()) {
+			frase = fileIntercanvis.nextLine();
+			inputBufferIntercanvis.append(frase);
+			if (fileIntercanvis.hasNextLine())
+			inputBufferIntercanvis.append("\n");
+		}
+
+		inpString = inputBufferIntercanvis.toString();
+
+		FileOutputStream fileOutInt = new FileOutputStream("intercanvisTest.txt");
+		fileOutInt.write(inpString.getBytes());
+		fileOutInt.close();
+		fileIntercanvis.close();
+
+		frase = "";
+		inpString = "";
+		while (fileProductes.hasNextLine()) {
+			frase = fileProductes.nextLine();
+			inputBufferProductes.append(frase);
+			if (fileProductes.hasNextLine())
+				inputBufferProductes.append("\n");
+		}
+
+		inpString = inputBufferProductes.toString();
+
+		FileOutputStream fileOutProds = new FileOutputStream("productesTest.txt");
+		fileOutProds.write(inpString.getBytes());
+		fileOutProds.close();
+		fileProductes.close();
+	}
+
 }
