@@ -23,6 +23,10 @@ public class LlistaUsuaris implements Serializable{
         this.llista = llista;
     }
 
+    public Usuari getUsuari(int i) {
+        return llista[i];
+    }
+
     public int getNumUsuaris() {
         return this.numUsuaris;
     }
@@ -67,6 +71,10 @@ public class LlistaUsuaris implements Serializable{
     	return trobat;
     }
 
+    public String getAlies(int i) {
+        return llista[i].getAlies();
+    }
+
     public void setAlies (int indUsuari, String nom) {
         llista[indUsuari].setAlies(nom);
     }
@@ -81,4 +89,6 @@ public class LlistaUsuaris implements Serializable{
         return (text);
 
     }
+
+    
 }

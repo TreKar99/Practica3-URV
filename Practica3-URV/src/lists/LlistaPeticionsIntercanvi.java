@@ -74,6 +74,7 @@ public class LlistaPeticionsIntercanvi{
 
         for (int i = 0; i < numPeticions; i++) {
             if (!llista[i].getContestada()) {
+                text += i + ".";
                 text += llista[i].toString() + "\n";;
             }
         }
@@ -211,6 +212,10 @@ public class LlistaPeticionsIntercanvi{
     
     public String getAliesEmisor(int num) {
         return (llista[num].getUsuariEmisor());
+    }
+
+    public String getCodi(int num) {
+        return (llista[num].getCodi());
     }
 
     public String getAliesRemitent(int num) {

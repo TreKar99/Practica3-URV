@@ -26,12 +26,17 @@ public class Usuari implements Serializable{
         this.email = email;
         this.codiPostal = codiPostal;
         this.productesUsuari = new LlistaProductes(100);
+        this.intercanvisUsuari = new LlistaPeticionsIntercanvi(100);
     }
 
     public String toString() {
         return ("Usuari " + alies + " amb correu " + email + " i codi postal " + codiPostal);
     }
    
+    public String toStringProdsUsu() {
+        return (this.productesUsuari.toString());
+    }
+
     public String getAlies() {
         return alies;
     }
@@ -80,8 +85,7 @@ public class Usuari implements Serializable{
     		if ((llista.getAliesEmisor(i) == alies || llista.getAliesRemitent(i) == alies) && (llista.getIsAfirmativa(i))) {
     			intercanvisFets.afegirPeticio(llista.getIntercanvi(i));
     		}
-    	}
-    	
+    	}    	
     	return(intercanvisFets);
     	
     }
