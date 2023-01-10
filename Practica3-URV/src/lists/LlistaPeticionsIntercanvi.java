@@ -1,7 +1,5 @@
 package lists;
 
-import java.io.Serializable;
-
 import classes.*;
 
 public class LlistaPeticionsIntercanvi{

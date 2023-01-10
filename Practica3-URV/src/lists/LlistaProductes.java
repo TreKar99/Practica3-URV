@@ -61,7 +61,7 @@ public class LlistaProductes implements Serializable{
      */
     public String serveisActius() {
         String text = "";
-        for (int i = 0; i < numProductes; i++) {
+        for (int i = 0; i < numProductes-1; i++) {
             if (llista[i].getTipus().equals("servei")) {
                 if (llista[i].estaActiu()) {
                     text += llista[i].toString() + "\n";

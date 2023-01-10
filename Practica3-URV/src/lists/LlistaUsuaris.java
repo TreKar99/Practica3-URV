@@ -55,7 +55,6 @@ public class LlistaUsuaris implements Serializable{
     	return i;
     }
 
-
     public boolean usuariExisteix (String nomUsuari) {
     	int i = 0;
     	boolean trobat = false;
@@ -66,6 +65,10 @@ public class LlistaUsuaris implements Serializable{
     		i++;
     	}
     	return trobat;
+    }
+
+    public void setAlies (int indUsuari, String nom) {
+        llista[indUsuari].setAlies(nom);
     }
 
     public String toString() {
